@@ -1,0 +1,177 @@
+{{ 'global_defs' }}
+{{ '{' }}
+{% for kg in k.global %}
+{% if kg.notification_email is defined and kg.notification_email != '' %}
+{% for kgn in kg.notification_email %}
+{% if loop.first %}
+{{ '  ' + 'notification_email' }}
+{{ '    {' }}
+{% endif %}
+{{ '      ' + kgn }}
+{% if loop.last %}
+{{ '    }' }}
+{% endif %}
+{% endfor %}
+{% if kg.notification_email_from is defined and kg.notification_email_from != '' %}
+{{ '  ' + 'notification_email_from' + ' ' + kg.notification_email_from }}
+{% endif %}
+{% if kg.smtp_server is defined and kg.smtp_server != '' %}
+{% for kgs in kg.smtp_server %}
+{% if kgs.address is defined and kgs.address != '' %}
+{% if kgs.port is defined and kgs.port != '' %}
+{{ '  ' ~ 'smtp_server' ~ ' ' ~ kgs.address ~ ':' ~ kgs.port }}
+{% else %}
+{{ '  ' ~ 'smtp_server' ~ ' ' ~ kgs.address }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if kg.smtp_helo_name is defined and kg.smtp_helo_name != '' %}
+{{ '  ' ~ 'smtp_helo_name' ~ ' ' ~ kg.smtp_helo_name }}
+{% endif %}
+{% if kg.smtp_connect_timeout is defined and kg.smtp_connect_timeout != '' %}
+{{ '  ' ~ 'smtp_connect_timeout' ~ ' ' ~ kg.smtp_connect_timeout }}
+{% endif %}
+{% if kg.router_id is defined and kg.router_id != '' %}
+{{ '  ' ~ 'router_id' ~ ' ' ~ kg.router_id }}
+{% endif %}
+{% if kg.vrrp_mcast_group4 is defined and kg.vrrp_mcast_group4 != '' %}
+{{ '  ' + 'vrrp_mcast_group4' + ' ' + kg.vrrp_mcast_group4 }}
+{% endif %}
+{% if kg.vrrp_mcast_group6 is defined and kg.vrrp_mcast_group6 != '' %}
+{{ '  ' + 'vrrp_mcast_group6' + ' ' + kg.vrrp_mcast_group6 }}
+{% endif %}
+{% if kg.default_interface is defined and kg.default_interface != '' %}
+{{ '  ' + 'vrrp_mcast_group6' + ' ' + kg.default_interface }}
+{% endif %}
+{% if kg.lvs_sync_daemon is defined and kg.lvs_sync_daemon != '' %}
+{% for kgl in kg.lvs_sync_daemon %}
+{% if kgl.interface is defined and kgl.interface != ''
+  and kgl.vrrp_instance is defined and kgl.vrrp_instance != '' %}
+{% if kgl.options is defined and kgl.options != '' %}
+{% for k,v in kgl.options.items() %}
+{% if loop.first %}
+{{ '  ' ~ 'lvs_sync_daemon' ~ ' ' ~ kgl.interface ~ ' ' ~ kgl.vrrp_instance ~ ' ' -}}
+{% endif %}
+{{ k ~ ' ' ~ v -}}
+{% if not loop.last %}
+{{ ' ' -}}
+{% endif %}
+{% endfor %}
+{% else %}
+{{ '  ' ~ 'lvs_sync_daemon' ~ ' ' ~ kgl.interface ~ ' ' ~ kgl.vrrp_instance -}}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if kg.lvs_flush is defined and kg.lvs_flush == 'true' %}
+{{ '  ' + 'lvs_flush' }}
+{% endif %}
+{% if kg.vrrp_garp_master_delay is defined and kg.vrrp_garp_master_delay != '' %}
+{{ '  ' ~ 'vrrp_garp_master_delay' ~ ' ' ~ kg.vrrp_garp_master_delay }}
+{% endif %}
+{% if kg.vrrp_garp_master_repeat is defined and kg.vrrp_garp_master_repeat != '' %}
+{{ '  ' ~ 'vrrp_garp_master_repeat' ~ ' ' ~ kg.vrrp_garp_master_repeat }}
+{% endif %}
+{% if kg.vrrp_garp_lower_prio_repeat is defined and kg.vrrp_garp_lower_prio_repeat != '' %}
+{{ '  ' ~ 'vrrp_garp_lower_prio_repeat' ~ ' ' ~ kg.vrrp_garp_lower_prio_repeat }}
+{% endif %}
+{% if kg.vrrp_garp_master_refresh is defined and kg.vrrp_garp_master_refresh != '' %}
+{{ '  ' ~ 'vrrp_garp_master_refresh' ~ ' ' ~ kg.vrrp_garp_master_refresh }}
+{% endif %}
+{% if kg.vrrp_garp_master_refresh_repeat is defined and kg.vrrp_garp_master_refresh_repeat != '' %}
+{{ '  ' ~ 'vrrp_garp_master_refresh_repeat' ~ ' ' ~ kg.vrrp_garp_master_refresh_repeat }}
+{% endif %}
+{% if kg.vrrp_garp_interval is defined and kg.vrrp_garp_interval != '' %}
+{{ '  ' ~ 'vrrp_garp_interval' ~ ' ' ~ kg.vrrp_garp_interval }}
+{% endif %}
+{% if kg.vrrp_gna_interval is defined and kg.vrrp_gna_interval != '' %}
+{{ '  ' ~ 'vrrp_gna_interval' ~ ' ' ~ kg.vrrp_gna_interval }}
+{% endif %}
+{% if kg.vrrp_lower_prio_no_advert is defined and kg.vrrp_lower_prio_no_advert == 'true' %}
+{{ '  ' + 'vrrp_lower_prio_no_advert' + ' ' + kg.vrrp_lower_prio_no_advert }}
+{% endif %}
+{% if kg.vrrp_higher_prio_send_advert is defined and kg.vrrp_higher_prio_send_advert == 'true' %}
+{{ '  ' + 'vrrp_higher_prio_send_advert' + ' ' + kg.vrrp_higher_prio_send_advert }}
+{% endif %}
+{% if kg.vrrp_version is defined and kg.vrrp_version in ['2', '3'] %}
+{{ '  ' ~ 'vrrp_version' ~ ' ' ~ kg.vrrp_version }}
+{% endif %}
+{% if kg.vrrp_iptables is defined and kg.vrrp_iptables != '' %}
+{% for kgi in kg.vrrp_iptables %}
+{% if kgi.input is defined and kgi.input != '' %}
+{% if kgi.output is defined and kgi.output != '' %}
+{{ '  ' ~ 'vrrp_iptables' ~ ' ' ~ kgi.input ~ ' ' ~ kgi.output }}
+{% else %}
+{{ '  ' ~ 'vrrp_iptables' ~ ' ' ~ kgi.input }}
+{% endif %}
+{% elif kgi.input is not defined and kgi.output is not defined %}
+{{ '  ' + 'vrrp_iptables' }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if kg.vrrp_ipset is defined and kg.vrrp_ipset != '' %}
+{{ '  ' ~ 'vrrp_ipset' ~ ' ' ~ kg.vrrp_ipset | join(' ') }}
+{% endif %}
+{% if kg.vrrp_check_unicast_src is defined and kg.vrrp_check_unicast_src == 'true' %}
+{{ '  ' + 'vrrp_check_unicast_src' }}
+{% endif %}
+{% if kg.vrrp_skip_check_adv_addr is defined and kg.vrrp_skip_check_adv_addr == 'true' %}
+{{ '  ' + 'vrrp_skip_check_adv_addr' }}
+{% endif %}
+{% if kg.vrrp_strict is defined and kg.vrrp_strict == 'true' %}
+{{ '  ' + 'vrrp_strict' }}
+{% endif %}
+{% if kg.vrrp_priority is defined and kg.vrrp_priority != '' %}
+{{ '  ' ~ 'vrrp_priority' ~ ' ' ~ kg.vrrp_priority }}
+{% endif %}
+{% if kg.checker_priority is defined and kg.checker_priority != '' %}
+{{ '  ' ~ 'checker_priority' ~ ' ' ~ kg.checker_priority }}
+{% endif %}
+{% if kg.vrrp_no_swap is defined and kg.vrrp_no_swap == 'true' %}
+{{ '  ' + 'vrrp_no_swap' }}
+{% endif %}
+{% if kg.checker_no_swap is defined and kg.checker_no_swap == 'true' %}
+{{ '  ' + 'checker_no_swap' }}
+{% endif %}
+{% if kg.snmp_socket is defined and kg.snmp_socket != '' %}
+{{ '  ' + 'snmp_socket' + ' ' + kg.snmp_socket }}
+{% endif %}
+{% if kg.enable_snmp_keepalived is defined and kg.enable_snmp_keepalived == 'true' %}
+{{ '  ' + 'enable_snmp_keepalived' }}
+{% endif %}
+{% if kg.enable_snmp_checker is defined and kg.enable_snmp_checker == 'true' %}
+{{ '  ' + 'enable_snmp_checker' }}
+{% endif %}
+{% if kg.enable_snmp_rfc is defined and kg.enable_snmp_rfc == 'true' %}
+{{ '  ' + 'enable_snmp_rfc' }}
+{% endif %}
+{% if kg.enable_snmp_rfcv2 is defined and kg.enable_snmp_rfcv2 == 'true' %}
+{{ '  ' + 'enable_snmp_rfcv2' }}
+{% endif %}
+{% if kg.enable_snmp_rfcv3 is defined and kg.enable_snmp_rfcv3 == 'true' %}
+{{ '  ' + 'enable_snmp_rfcv3' }}
+{% endif %}
+{% if kg.enable_traps is defined and kg.enable_traps == 'true' %}
+{{ '  ' + 'enable_traps' }}
+{% endif %}
+{% if kg.enable_dbus is defined and kg.enable_dbus == 'true' %}
+{{ '  ' + 'enable_dbus' }}
+{% endif %}
+{% if kg.script_user is defined and kg.script_user != '' %}
+{% for kgs in kg.script_user %}
+{% if kgs.username is defined and kgs.username != '' %}
+{% if kgs.group is defined and kgs.group != '' %}
+{{ '  ' ~ 'script_user' ~ ' ' ~ kgs.username ~ ' ' ~ kgs.group }}
+{% else %}
+{{ '  ' ~ 'script_user' ~ ' ' ~ kgs.username }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if kg.enable_script_security is defined and kg.enable_script_security == 'true' %}
+{{ '  ' + 'enable_script_security' }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{{ '}' }}

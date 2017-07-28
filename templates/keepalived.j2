@@ -1,0 +1,7 @@
+{{ '## ' + 'keepalived.conf' }}
+{{ '# ' + ansible_managed }}
+{{ '# ' + 'Do not edit manually' }}
+
+{% for k in hostvars[inventory_hostname]['keepalived'] %}
+{% include 'global_defs.j2' -%}
+{% endfor %}

@@ -17,7 +17,9 @@ keepalived:
 # keepalived@<local host name>).
     notification_email_from: 'admin@example.com'
 # IP address or domain name with optional port number (default 25).
-    smtp_server: '127.0.0.1:25'
+    smtp_server:
+    - address: '127.0.0.1'
+      port: '25'
 # Name to use in HELO messages. Defaults to local host name.
     smtp_helo_name: ''
 # SMTP connect timeout, seconds.
@@ -34,18 +36,23 @@ keepalived:
 # Binding interface, vrrp instance and optional. Note, maxlen, port, ttl and
 # group are only available on Linux 4.3 or later.
     lvs_sync_daemon:
+# Binding interface.
+    - interface: ''
+# VRRP instance.
+      vrrp_instance: ''
+      options:
 # Syncid (0 to 255) for lvs syncd.
-    - syncid: ''
+        id: ''
 # Maximum packet length (1..65507).
-      maxlen: ''
+        maxlen: ''
 # UDP port number to use (1..65535).
-      port: ''
+        port: ''
 # Time To Live (1..255).
-      ttl: ''
+        ttl: ''
 # Multicast group address (IPv4 or IPv6).
-      group: ''
+        group: ''
 # Flush any existing LVS configuration at startup.
-    lvs_flush: ''
+    lvs_flush: 'false'
 # Melay for second set of gratuitous ARPs after transition to MASTER.
 # Default '5', '0' for no second set.
     vrrp_garp_master_delay: '5'
@@ -81,8 +88,6 @@ keepalived:
     vrrp_higher_prio_send_advert: 'false'
 # Set the default VRRP version to use ('2' or '3'). Default is '2'.
     vrrp_version: '2'
-# If input or output is empty - no any iptables rules is added.
-    vrrp_iptables:
 # Specify the iptables chain for ensuring a version 3 instance doesn't respond
 # on addresses that it doesn't own. It is necessary for the specified chain to
 # exist in the iptables and/or ip6tables configuration, and for the chain to be
@@ -90,6 +95,7 @@ keepalived:
 # probably be necessary to have this filtering after accepting any
 # 'ESTABLISHED,RELATED' packets, because IPv4 might select the VIP as the source
 # address for outgoing connections. Default chain is 'INPUT'.
+    vrrp_iptables:
     - input: 'keepalived_in'
 # Or for outbound filtering as well. Note, outbound filtering won't work with
 # IPv4, since the VIP can be selected as the source address for an outgoing
@@ -154,7 +160,8 @@ keepalived:
 # Don't run scripts configured to be run as root if any part of the path is
 # writable by a non-root user.
     enable_script_security: 'false'
-# For running keepalived in a separate network namespace:
+# For running keepalived in a separate network namespace (not implemented
+# in role because I can't find example configuration):
 # Set the network namespace to run in The directory '/var/run/keepalived' will
 # be created as an unshared mount point, for example for pid files. syslog
 # entries will have '_NAME' appended to the ident. Note: the namespace cannot be
@@ -466,8 +473,8 @@ keepalived:
     - exec: '/path/notify_master.sh'
       user: 'username'
       group: 'groupname'
-    notify_master:
-    - exec: '/path/notify_master.sh'
+    notify_backup:
+    - exec: '/path/notify_backup.sh'
       user: 'username'
       group: 'groupname'
     notify_fault:
