@@ -219,16 +219,16 @@ keepalived:
     rise: '1'
 # Required number of successes for KO transition.
     fall: '3'
+# Assume script initially is in failed state.
+    init_fail: 'false'
 # user/group names to run script under. Group default to group of user.
     user:
     - username: 'automation'
       group: 'robots'
-# Assume script initially is in failed state.
-    init_fail: 'false'
   - name: 'check_sshd'
     script: 'killall -0 sshd' # cheaper than pidof
     interval: '2' # check every 2 seconds
-    weight: '-4'# default prio: -4 if KO
+    weight: '-4'# default prio -4 if KO
     fall: '2' # require 2 failures for KO
     rise: '2' # require 2 successes for OK
   - name: 'check_haproxy'
@@ -237,7 +237,7 @@ keepalived:
   - name: 'check_http_port'
     script: '</dev/tcp/127.0.0.1/80' # connects and exits
     interval: '1'
-    weight: '-2' # default prio: -2 if connect fails
+    weight: '-2' # default prio -2 if connect fails
   - name: 'check_https_port'
     script: '</dev/tcp/127.0.0.1/443'
     interval: '1'

@@ -3,5 +3,22 @@
 {{ '# ' + 'Do not edit manually' }}
 
 {% for k in hostvars[inventory_hostname]['keepalived'] %}
-{% include 'global_defs.j2' -%}
+{% if k.global is defined and k.global != '' %}
+{% include 'global_defs.j2' %}
+{% endif %}
+{% if k.static_ipaddress is defined and k.static_ipaddress != '' %}
+{% include 'static_ipaddress.j2' %}
+{% endif %}
+{% if k.static_routes is defined and k.static_routes != '' %}
+{% include 'static_routes.j2' %}
+{% endif %}
+{% if k.static_rules is defined and k.static_rules != '' %}
+{% include 'static_rules.j2' %}
+{% endif %}
+{% if k.vrrp_script is defined and k.vrrp_script != '' %}
+{% include 'vrrp_script.j2' %}
+{% endif %}
+{% if k.vrrp_sync_group is defined and k.vrrp_sync_group != '' %}
+{% include 'vrrp_sync_group.j2' %}
+{% endif %}
 {% endfor %}

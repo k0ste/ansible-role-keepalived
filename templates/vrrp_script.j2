@@ -1,0 +1,42 @@
+{% for kv in k.vrrp_script %}
+{% if kv.name is defined and kv.name != '' %}
+{{ 'vrrp_script ' ~ kv.name ~ ' {' }}
+{% if kv.script is defined and kv.script != '' %}
+{{ '  ' + 'script' + '\"' + kv.script + '\"' }}
+{% endif %}
+{% if kv.interval is defined and kv.interval != '' %}
+{{ '  ' ~ 'interval' ~ ' ' ~ kv.interval  }}
+{% endif %}
+{% if kv.timeout is defined and kv.timeout != '' %}
+{{ '  ' ~ 'timeout' ~ ' ' ~ kv.timeout  }}
+{% endif %}
+{% if kv.weight is defined and kv.weight != '' %}
+{{ '  ' ~ 'weight' ~ ' ' ~ kv.weight  }}
+{% endif %}
+{% if kv.rise is defined and kv.rise != '' %}
+{{ '  ' ~ 'rise' ~ ' ' ~ kv.rise  }}
+{% endif %}
+{% if kv.fall is defined and kv.fall != '' %}
+{{ '  ' ~ 'fall' ~ ' ' ~ kv.fall  }}
+{% endif %}
+{% if kv.init_fail is defined and kv.init_fail == 'true' %}
+{{ '  ' ~ 'init_fail' ~ kv.init_fail  }}
+{% endif %}
+{% if kv.user is defined and kv.user != '' %}
+{% for kvs in kv.user %}
+{% if kvs.username is defined and kvs.username != '' %}
+{% if kvs.group is defined and kvs.group != '' %}
+{{ '  ' ~ 'user' ~ ' ' ~ kvs.username ~ ' ' ~ kvs.group }}
+{% else %}
+{{ '  ' ~ 'user' ~ ' ' ~ kvs.username }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% if loop.last %}
+{{ '}\n' }}
+{% else %}
+{{ '}' }}
+{% endif %}
+{% endfor %}
