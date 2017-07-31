@@ -1,0 +1,20 @@
+{% for kg in k.garp_group %}
+{{ 'garp_group' + ' {' }}
+{% if kg.garp_interval is defined and kg.garp_interval != '' %}
+{{ '  ' ~ 'garp_interval' ~ ' ' ~ kg.garp_interval }}
+{% endif %}
+{% if kg.gna_interval is defined and kg.gna_interval != '' %}
+{{ '  ' ~ 'gna_interval' ~ ' ' ~ kg.gna_interval }}
+{% endif %}
+{% if kg.interface is defined and kg.interface != '' %}
+{{ '  ' ~ 'interface' ~ ' ' ~ kg.interface }}
+{% endif %}
+{% if kg.interfaces is defined and kg.interfaces != '' %}
+{{ '  ' + 'interfaces' + ' {' }}
+{% for kgi in kg.interfaces %}
+{{ '    ' ~ kgi }}
+{% endfor %}
+{{ '  }' }}
+{% endif %}
+{{ '}' }}
+{% endfor %}

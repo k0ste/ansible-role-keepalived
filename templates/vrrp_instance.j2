@@ -1,0 +1,171 @@
+{% for kv in k.vrrp_instance %}
+{% if kv.name is defined and kv.name != '' %}
+{{ 'vrrp_instance' ~ ' ' ~ kv.name ~ ' {' }}
+{% if kv.state is defined and kv.state in ['MASTER', 'BACKUP'] %}
+{{ '  ' + 'state' + ' ' + kv.state }}
+{% endif %}
+{% if kv.interface is defined and kv.interface != '' %}
+{{ '  ' + 'interface' + ' ' + kv.interface }}
+{% endif %}
+{% if kv.use_vmac is defined and kv.use_vmac != '' %}
+{{ '  ' + 'use_vmac' }}
+{% endif %}
+{% if kv.vmac_xmit_base is defined and kv.vmac_xmit_base == 'true' %}
+{{ '  ' + 'vmac_xmit_base' }}
+{% endif %}
+{% if kv.native_ipv6 is defined and kv.native_ipv6 == 'true' %}
+{{ '  ' + 'native_ipv6' }}
+{% endif %}
+{% if kv.dont_track_primary is defined and kv.dont_track_primary == 'true' %}
+{{ '  ' + 'dont_track_primary' }}
+{% endif %}
+{% if kv.track_interface is defined and kv.track_interface != '' %}
+{{ '  ' + 'track_interface' + ' {' }}
+{% for kvt in kv.track_interface %}
+{% if kvt.interface is defined and kvt.interface != '' %}
+{% if kvt.weight is defined and kvt.weight != '' %}
+{{ '    ' ~ kvt.interface ~ ' ' ~ 'weight' ~ ' ' ~ kvt.weight }}
+{% else %}
+{{ '    ' ~ kvt.interface }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{{ '  }' }}
+{% endif %}
+{% if kv.track_script is defined and kv.track_script != '' %}
+{{ '  ' + 'track_script' + ' {' }}
+{% for kvt in kv.track_script %}
+{% if kvt.name is defined and kvt.name != '' %}
+{% if kvt.weight is defined and kvt.weight != '' %}
+{{ '    ' ~ kvt.name ~ ' ' ~ 'weight' ~ ' ' ~ kvt.weight }}
+{% else %}
+{{ '    ' ~ kvt.name }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{{ '  }' }}
+{% endif %}
+{% if kv.mcast_src_ip is defined and kv.mcast_src_ip != '' %}
+{{ '  ' + 'mcast_src_ip' + ' ' + kv.mcast_src_ip }}
+{% endif %}
+{% if kv.unicast_src_ip is defined and kv.unicast_src_ip != '' %}
+{{ '  ' + 'unicast_src_ip' + ' ' + kv.unicast_src_ip }}
+{% endif %}
+{% if kv.version is defined and kv.version in ['2', '3'] %}
+{{ '  ' ~ 'version' ~ ' ' ~ kv.version }}
+{% endif %}
+{% if kv.unicast_peer is defined and kv.unicast_peer != '' %}
+{{ '  ' + 'unicast_peer' + ' {' }}
+{% for kvu in kv.unicast_peer %}
+{% if kvu | ipaddr('host') %}
+{{ '    ' + kvu }}
+{% endif %}
+{% endfor %}
+{{ '  }' }}
+{% endif %}
+{% if kv.garp_master_delay is defined and kv.garp_master_delay != '' %}
+{{ '  ' ~ 'garp_master_delay' ~ ' ' ~ kv.garp_master_delay }}
+{% endif %}
+{% if kv.garp_master_repeat is defined and kv.garp_master_repeat != '' %}
+{{ '  ' ~ 'garp_master_repeat' ~ ' ' ~ kv.garp_master_repeat }}
+{% endif %}
+{% if kv.garp_lower_prio_delay is defined and kv.garp_lower_prio_delay != '' %}
+{{ '  ' ~ 'garp_lower_prio_delay' ~ ' ' ~ kv.garp_lower_prio_delay }}
+{% endif %}
+{% if kv.garp_lower_prio_repeat is defined and kv.garp_lower_prio_repeat != '' %}
+{{ '  ' ~ 'garp_lower_prio_repeat' ~ ' ' ~ kv.garp_lower_prio_repeat }}
+{% endif %}
+{% if kv.garp_master_refresh is defined and kv.garp_master_refresh != '' %}
+{{ '  ' ~ 'garp_master_refresh' ~ ' ' ~ kv.garp_master_refresh }}
+{% endif %}
+{% if kv.garp_master_refresh_repeat is defined and kv.garp_master_refresh_repeat != '' %}
+{{ '  ' ~ 'garp_master_refresh_repeat' ~ ' ' ~ kv.garp_master_refresh_repeat }}
+{% endif %}
+{% if kv.garp_interval is defined and kv.garp_interval != '' %}
+{{ '  ' ~ 'garp_interval' ~ ' ' ~ kv.garp_interval }}
+{% endif %}
+{% if kv.gna_interval is defined and kv.gna_interval != '' %}
+{{ '  ' ~ 'gna_interval' ~ ' ' ~ kv.gna_interval }}
+{% endif %}
+{% if kv.lower_prio_no_advert is defined and kv.lower_prio_no_advert == 'true' %}
+{{ '  ' + 'lower_prio_no_advert' + ' ' + kv.lower_prio_no_advert }}
+{% endif %}
+{% if kv.higher_prio_send_advert is defined and kv.higher_prio_send_advert == 'true' %}
+{{ '  ' + 'higher_prio_send_advert' + ' ' + kv.higher_prio_send_advert }}
+{% endif %}
+{% if kv.prompte_secondaries is defined and kv.prompte_secondaries == 'true' %}
+{{ '  ' + 'prompte_secondaries' + ' ' + kv.prompte_secondaries }}
+{% endif %}
+{% if kv.virtual_router_id is defined and kv.virtual_router_id != '' %}
+{{ '  ' ~ 'virtual_router_id' ~ ' ' ~ kv.virtual_router_id }}
+{% endif %}
+{% if kv.priority is defined and kv.priority != '' %}
+{{ '  ' ~ 'priority' ~ ' ' ~ kv.priority }}
+{% endif %}
+{% if kv.advert_int is defined and kv.advert_int != '' %}
+{{ '  ' ~ 'advert_int' ~ ' ' ~ kv.advert_int }}
+{% endif %}
+{% if kv.authentication is defined and kv.authentication != '' %}
+{{ '  ' + 'authentication' + ' {' }}
+{% for kva in kv.authentication %}
+{% if kva.type is defined and kva.type in ['PASS', 'AH']
+  and kva.password is defined and kva.password != '' %}
+{{ '    ' + 'auth_type' + ' ' + kva.type }}
+{{ '    ' ~ 'auth_pass' ~ ' ' ~ kva.password }}
+{% endif %}
+{% endfor %}
+{{ '  }'}}
+{% endif %}
+{% if kv.virtual_ipaddress is defined and kv.virtual_ipaddress != '' %}
+{{ '  ' + 'virtual_ipaddress' + ' {' }}
+{% for kvv in kv.virtual_ipaddress %}
+{{ '    ' + kvv }}
+{% endfor %}
+{{ '  }'}}
+{% endif %}
+{% if kv.virtual_ipaddress_excluded is defined and kv.virtual_ipaddress_excluded != '' %}
+{{ '  ' + 'virtual_ipaddress_excluded' + ' {' }}
+{% for kvv in kv.virtual_ipaddress_excluded %}
+{{ '    ' + kvv }}
+{% endfor %}
+{{ '  }'}}
+{% endif %}
+{% if kv.virtual_routes is defined and kv.virtual_routes != '' %}
+{{ '  ' + 'virtual_routes' + ' {' }}
+{% for kvv in kv.virtual_routes %}
+{{ '    ' + kvv }}
+{% endfor %}
+{{ '  }'}}
+{% endif %}
+{% if kv.virtual_rules is defined and kv.virtual_rules != '' %}
+{{ '  ' + 'virtual_rules' + ' {' }}
+{% for kvv in kv.virtual_rules %}
+{{ '    ' + kvv }}
+{% endfor %}
+{{ '  }' }}
+{% endif %}
+{% if kv.accept is defined and kv.accept == 'true' %}
+{{ '  ' + 'accept' }}
+{% endif %}
+{% if kv.no_accept is defined and kv.no_accept == 'true' %}
+{{ '  ' + 'no_accept' }}
+{% endif %}
+{% if kv.nopreempt is defined and kv.nopreempt == 'true' %}
+{{ '  ' + 'nopreempt' }}
+{% endif %}
+{% if kv.skip_check_adv_addr is defined and kv.skip_check_adv_addr in ['true', 'false'] %}
+{{ '  ' + 'skip_check_adv_addr' + ' ' + kv.skip_check_adv_addr }}
+{% endif %}
+{% if kv.strict_mode is defined and kv.strict_mode in ['true', 'false'] %}
+{{ '  ' + 'strict_mode' + ' ' + kv.strict_mode }}
+{% endif %}
+{% if kv.preempt_delay is defined and kv.preempt_delay != '' %}
+{{ '  ' + 'preempt_delay' + ' ' + kv.preempt_delay }}
+{% endif %}
+{% if kv.debug is defined and kv.debug != '' %}
+{{ '  ' + 'debug' + ' ' + kv.debug }}
+{% endif %}
+{% include 'notifications.j2' %}
+{% endif %}
+{{ '}' }}
+{% endfor %}

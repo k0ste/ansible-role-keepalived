@@ -1,6 +1,6 @@
 {% for kv in k.vrrp_script %}
 {% if kv.name is defined and kv.name != '' %}
-{{ 'vrrp_script ' ~ kv.name ~ ' {' }}
+{{ 'vrrp_script' ~ ' ' ~ kv.name ~ ' {' }}
 {% if kv.script is defined and kv.script != '' %}
 {{ '  ' + 'script' + '\"' + kv.script + '\"' }}
 {% endif %}

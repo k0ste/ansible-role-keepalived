@@ -322,6 +322,8 @@ keepalived:
 # Sets the default interval between unsolicited NA (in seconds,
 # resolution microseconds).
     gna_interval: '0.5'
+# The physical interface to which the intervals apply.
+    interface: ''
 # A list of interfaces accross which the delays are aggregated.
     interfaces:
     - 'vlan130'
@@ -401,12 +403,12 @@ keepalived:
 # Use of this option is non-compliant and can cause problems; avoid using if
 # possible, except when using unicast, where it can be helpful.
     authentication:
-# PASS - Simple password (suggested)
-# AH - IPSEC (not recommended)
-    - auth_type: 'PASS'
+# PASS - Simple password
+# AH - IPSEC
+    - type: 'PASS'
 # Password for accessing vrrpd. Should be the same on all machines. Only the
 # first eight (8) characters are used.
-      auth_pass: '1234'
+      password: '1234'
 # Addresses add|del on change to MASTER, to BACKUP. With the same entries on
 # other machines, the opposite transition will be occurring.
     virtual_ipaddress:

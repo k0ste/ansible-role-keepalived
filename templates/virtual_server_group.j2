@@ -1,0 +1,9 @@
+{% for kv in k.virtual_server_group %}
+{% if kv.name is defined and kv.name != '' %}
+{{ 'virtual_server_group' ~ ' ' ~ kv.name ~ ' {' }}
+{% for kvd in kv.data %}
+{{ '  ' + kvd }}
+{% endfor %}
+{{ '}' }}
+{% endif %}
+{% endfor %}

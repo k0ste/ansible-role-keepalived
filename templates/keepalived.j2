@@ -21,4 +21,19 @@
 {% if k.vrrp_sync_group is defined and k.vrrp_sync_group != '' %}
 {% include 'vrrp_sync_group.j2' %}
 {% endif %}
+{% if k.garp_group is defined and k.garp_group != '' %}
+{% include 'garp_group.j2' %}
+{% endif %}
+{% if k.vrrp_instance is defined and k.vrrp_instance != '' %}
+{% include 'vrrp_instance.j2' %}
+{% endif %}
+{% if k.ssl is defined and k.ssl != '' %}
+{% include 'ssl.j2' %}
+{% endif %}
+{% if k.virtual_server_group is defined and k.virtual_server_group != '' %}
+{% include 'virtual_server_group.j2' %}
+{% endif %}
+{% if k.virtual_server is defined and k.virtual_server != '' %}
+{% include 'virtual_server.j2' %}
+{% endif %}
 {% endfor %}

@@ -1,0 +1,16 @@
+{{ 'SSL' + ' {' }}
+{% for ks in k.ssl %}
+{% if ks.password is defined and ks.password != '' %}
+{{ '  ' ~ 'password' ~ ' ' ~ ks.password }}
+{% endif %}
+{% if ks.ca is defined and ks.ca != '' %}
+{{ '  ' + 'ca' + ' ' + ks.ca }}
+{% endif %}
+{% if ks.certificate is defined and ks.certificate != '' %}
+{{ '  ' + 'certificate' + ' ' + ks.certificate }}
+{% endif %}
+{% if ks.key is defined and ks.key != '' %}
+{{ '  ' + 'key' + ' ' + ks.key }}
+{% endif %}
+{% endfor %}
+{{ '}\n'}}

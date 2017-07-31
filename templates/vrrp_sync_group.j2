@@ -1,0 +1,17 @@
+{% for kv in k.vrrp_sync_group %}
+{% if kv.name is defined and kv.name != '' %}
+{{ 'vrrp_sync_group' ~ ' ' ~ kv.name ~ ' {' }}
+{% if kv.group is defined and kv.group != '' %}
+{{ '  ' + 'group' + ' ' + '{' }}
+{% for kvg in kv.group %}
+{{ '    ' ~ kvg }}
+{% endfor %}
+{{ '  }' }}
+{% endif %}
+{% include 'notifications.j2' %}
+{% if kv.global_tracking is defined and kv.global_tracking == 'true' %}
+{{ '  ' + 'global_tracking' }}
+{% endif %}
+{{ '}' }}
+{% endif %}
+{% endfor %}

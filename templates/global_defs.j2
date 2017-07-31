@@ -1,5 +1,4 @@
-{{ 'global_defs' }}
-{{ '{' }}
+{{ 'global_defs' + ' {' }}
 {% for kg in k.global %}
 {% if kg.notification_email is defined and kg.notification_email != '' %}
 {% for kgn in kg.notification_email %}
