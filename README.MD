@@ -790,16 +790,11 @@ keepalived:
 # DNS healthchecker.
       - check_method: 'DNS_CHECK'
 # DNS query type (A, NS, CNAME, SOA, MX, TXT, AAAA). The default is SOA.
-        query_type: ''
+        query_type: 'SOA'
 # Domain name to use for the DNS query. The default is . (dot).
         name: 'google.com'
-# Retry count to make additional checks if check of an alive server fails.
-# Default is '1'.
-        retry: '1'
-# Delay in seconds before retrying. Default is '1'.
-        delay_before_retry: '1'
-# Optional string to use for the SMTP HELO request.
-        helo_name: 'helo.example.com'
+# Number of times to retry a failed check. The default is '3' times.
+        retry: '3'
 # Optional IP address to connect to. The default is the realserver IP.
         connect_ip: 'ipaddr'
 # Optional port to connect to. The default is the realserver port.

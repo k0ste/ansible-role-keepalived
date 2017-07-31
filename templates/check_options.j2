@@ -1,0 +1,27 @@
+{% if kvrc.retry is defined and kvrc.retry != '' %}
+{{ '      ' ~ 'retry' ~ ' ' ~ kvrc.retry }}
+{% endif %}
+{% if kvrc.delay_before_retry is defined and kvrc.delay_before_retry != '' %}
+{{ '      ' ~ 'delay_before_retry' ~ ' ' ~ kvrc.delay_before_retry }}
+{% endif %}
+{% if kvrc.warmup is defined and kvrc.warmup != '' %}
+{{ '      ' ~ 'warmup' ~ ' ' ~ kvrc.warmup }}
+{% endif %}
+{% if kvrc.connect_ip is defined and kvrc.connect_ip | ipaddr('host') %}
+{{ '      ' + 'connect_ip' + ' ' + kvrc.connect_ip }}
+{% endif %}
+{% if kvrc.connect_port is defined and kvrc.connect_port != '' %}
+{{ '      ' ~ 'connect_port' ~ ' ' ~ kvrc.connect_port }}
+{% endif %}
+{% if kvrc.bindto is defined and kvrc.bindto | ipaddr('host') %}
+{{ '      ' + 'bindto' + ' ' + kvrc.bindto }}
+{% endif %}
+{% if kvrc.bind_port is defined and kvrc.bind_port != '' %}
+{{ '      ' ~ 'bind_port' ~ ' ' ~ kvrc.bind_port }}
+{% endif %}
+{% if kvrc.connect_timeout is defined and kvrc.connect_timeout != '' %}
+{{ '      ' ~ 'connect_timeout' ~ ' ' ~ kvrc.connect_timeout }}
+{% endif %}
+{% if kvrc.fwmark is defined and kvrc.fwmark != '' %}
+{{ '      ' ~ 'fwmark' ~ ' ' ~ kvrc.fwmark }}
+{% endif %}
