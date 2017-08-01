@@ -3,8 +3,7 @@
 {% if kg.notification_email is defined and kg.notification_email != '' %}
 {% for kgn in kg.notification_email %}
 {% if loop.first %}
-{{ '  ' + 'notification_email' }}
-{{ '    {' }}
+{{ '  ' + 'notification_email' + ' {' }}
 {% endif %}
 {{ '      ' + kgn }}
 {% if loop.last %}
