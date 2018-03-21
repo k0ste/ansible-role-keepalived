@@ -1,18 +1,19 @@
 ---
-- name: keepalived | Make work dir
-  file:
-    path: "{{ hostvars[inventory_hostname]['keepalived_destination'] }}"
-    state: "directory"
-    owner: "root"
-    group: "root"
-    mode: "755"
-- name: keepalived | Generate keepalived configuration
+- name: keepalived | Deploy keepalived configuration
   template:
     src: "keepalived.j2"
-    dest: "{{ hostvars[inventory_hostname]['keepalived_destination'] + '/' + 'keepalived.conf' }}"
+    dest: "{{ hostvars[inventory_hostname]['keepalived_destination'] + '/' +
+              'keepalived.conf' }}"
     owner: "root"
     group: "root"
     mode: "0644"
   notify:
-  - "Enable keepalived"
-  - "Start keepalived"
+  - "Restart keepalived"
+- name: keepalived | Enable keepalived service
+  service:
+    name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
+    state: "started"
+    enabled: "yes"
+  when:
+  - "hostvars[inventory_hostname]['keepalived_enable'] is defined"
+  - "hostvars[inventory_hostname]['keepalived_enable'] == 'true'"

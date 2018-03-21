@@ -1,17 +1,13 @@
-keepalived
-============
+# keepalived
 
 Role for deploy Keepalived - framework for load balancing and high availability.
 
+## Requirements for usage
 
-Requirements for usage
------------------------
-
-* Ansible 2.2;
+* Ansible 2.4;
 * [python-netaddr](//docs.ansible.com/ansible/playbooks_filters_ipaddr.html);
 
-Example configuration
--------------------------
+## Example configuration
 
 ```yaml
 # Enable keepalived after deploy

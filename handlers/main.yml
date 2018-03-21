@@ -1,12 +1,5 @@
 ---
-- name: Enable keepalived
-  service:
-    name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
-    enabled: "yes"
-  when:
-  - "hostvars[inventory_hostname]['keepalived_enable'] is defined"
-  - "hostvars[inventory_hostname]['keepalived_enable'] == 'true'"
-- name: Start keepalived
+- name: Restart keepalived
   service:
     name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
     state: "restarted"
