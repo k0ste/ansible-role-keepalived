@@ -3,7 +3,7 @@
   template:
     src: "keepalived.j2"
     dest: "{{ hostvars[inventory_hostname]['keepalived_destination'] + '/' +
-              'keepalived.conf' }}"
+      'keepalived.conf' }}"
     owner: "root"
     group: "root"
     mode: "0644"

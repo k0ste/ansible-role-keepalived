@@ -2,3 +2,4 @@
 keepalived_enable: 'false'
 keepalived_restart: 'false'
 keepalived_install_package: 'false'
+keepalived: []
