@@ -9,7 +9,7 @@
     mode: "0644"
     validate: "keepalived -lt -f %s"
   notify:
-  - "Restart keepalived"
+  - "Start keepalived"
 - name: keepalived | Enable keepalived service
   service:
     name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"

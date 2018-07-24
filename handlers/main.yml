@@ -1,8 +1,8 @@
 ---
-- name: Restart keepalived
+- name: Start keepalived
   service:
     name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
-    state: "restarted"
+    state: "{{ vars['keepalived_restart_cmd'] }}"
   when:
   - "hostvars[inventory_hostname]['keepalived_restart'] is defined"
   - "hostvars[inventory_hostname]['keepalived_restart'] == 'true'"

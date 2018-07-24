@@ -2,6 +2,26 @@
 - name: keepalived | Add the OS specific variables
   include_vars: "{{
     hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
+- name: keepalived | Assert that restart method variable have proper value
+  assert:
+    that:
+    - "hostvars[inventory_hostname]['keepalived_restart_method'] in
+       ['reload', 'restart']"
+    msg: "'keepalived_restart_method_restart_method' must be in 'reload'
+          or 'restart'."
+  when:
+  - "hostvars[inventory_hostname]['keepalived_restart_method'] is defined"
+- name: keepalived | Set service restart method when restart method is defined
+  set_fact:
+    keepalived_restart_cmd: "{{
+      hostvars[inventory_hostname]['keepalived_restart_method'] + 'ed' }}"
+  when:
+  - "hostvars[inventory_hostname]['keepalived_restart_method'] is defined"
+- name: keepalived | Set service restart method to SIGHUP
+  set_fact:
+    keepalived_restart_cmd: "reloaded"
+  when:
+  - "hostvars[inventory_hostname]['keepalived_restart_method'] is not defined"
 - name: keepalived | Make work dir
   file:
     path: "{{ hostvars[inventory_hostname]['keepalived_destination'] }}"

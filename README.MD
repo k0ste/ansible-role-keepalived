@@ -16,6 +16,8 @@ keepalived_enable: 'true'
 keepalived_restart: 'false'
 # Install keepalived
 keepalived_install_package: 'true'
+# What to do when 'keepalived_restart' set to 'true' - 'reload' or 'restart'
+keepalived_restart_method: 'reload'
 
 keepalived:
 - global:
