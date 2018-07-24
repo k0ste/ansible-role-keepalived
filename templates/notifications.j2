@@ -1,35 +1,40 @@
 {% if kv.notify_master is defined and kv.notify_master != '' %}
 {% for kvn in kv.notify_master %}
 {% if kvn.exec is defined %}
-{{ '  ' + 'notify_master' + ' \"' + kvn.exec + '\"' + ' ' + kvn.user | default('') + ' ' + kvn.group | default('') }}
+{{ '  ' + 'notify_master' + ' \"' + kvn.exec + '\"' + ' ' +
+   kvn.user | default('') + ' ' + kvn.group | default('') }}
 {% endif %}
 {% endfor %}
 {% endif %}
 {% if kv.notify_backup is defined and kv.notify_backup != '' %}
 {% for kvn in kv.notify_backup %}
 {% if kvn.exec is defined %}
-{{ '  ' + 'notify_backup' + ' \"' + kvn.exec + '\"' + ' ' + kvn.user | default('') + ' ' + kvn.group | default('') }}
+{{ '  ' + 'notify_backup' + ' \"' + kvn.exec + '\"' + ' ' +
+   kvn.user | default('') + ' ' + kvn.group | default('') }}
 {% endif %}
 {% endfor %}
 {% endif %}
 {% if kv.notify_stop is defined and kv.notify_stop != '' %}
 {% for kvn in kv.notify_stop %}
 {% if kvn.exec is defined %}
-{{ '  ' + 'notify_stop' + ' \"' + kvn.exec + '\"' + ' ' + kvn.user | default('') + ' ' + kvn.group | default('') }}
+{{ '  ' + 'notify_stop' + ' \"' + kvn.exec + '\"' + ' ' +
+   kvn.user | default('') + ' ' + kvn.group | default('') }}
 {% endif %}
 {% endfor %}
 {% endif %}
 {% if kv.notify_fault is defined and kv.notify_fault != '' %}
 {% for kvn in kv.notify_fault %}
 {% if kvn.exec is defined %}
-{{ '  ' + 'notify_fault' + ' \"' + kvn.exec + '\"' + ' ' + kvn.user | default('') + ' ' + kvn.group | default('') }}
+{{ '  ' + 'notify_fault' + ' \"' + kvn.exec + '\"' + ' ' +
+   kvn.user | default('') + ' ' + kvn.group | default('') }}
 {% endif %}
 {% endfor %}
 {% endif %}
 {% if kv.notify is defined and kv.notify != '' %}
 {% for kvn in kv.notify %}
 {% if kvn.exec is defined %}
-{{ '  ' + 'notify' + ' \"' + kvn.exec + '\"' + ' ' + kvn.user | default('') + ' ' + kvn.group | default('') }}
+{{ '  ' + 'notify' + ' \"' + kvn.exec + '\"' + ' ' +
+   kvn.user | default('') + ' ' + kvn.group | default('') }}
 {% endif %}
 {% endfor %}
 {% endif %}

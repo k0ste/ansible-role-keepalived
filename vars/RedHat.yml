@@ -1,0 +1,4 @@
+---
+keepalived_package: 'keepalived'
+keepalived_service: 'keepalived'
+keepalived_destination: '/etc/keepalived'

@@ -72,13 +72,15 @@
 {% if kv.garp_lower_prio_delay is defined and kv.garp_lower_prio_delay != '' %}
 {{ '  ' ~ 'garp_lower_prio_delay' ~ ' ' ~ kv.garp_lower_prio_delay }}
 {% endif %}
-{% if kv.garp_lower_prio_repeat is defined and kv.garp_lower_prio_repeat != '' %}
+{% if kv.garp_lower_prio_repeat is defined and
+      kv.garp_lower_prio_repeat != '' %}
 {{ '  ' ~ 'garp_lower_prio_repeat' ~ ' ' ~ kv.garp_lower_prio_repeat }}
 {% endif %}
 {% if kv.garp_master_refresh is defined and kv.garp_master_refresh != '' %}
 {{ '  ' ~ 'garp_master_refresh' ~ ' ' ~ kv.garp_master_refresh }}
 {% endif %}
-{% if kv.garp_master_refresh_repeat is defined and kv.garp_master_refresh_repeat != '' %}
+{% if kv.garp_master_refresh_repeat is defined and
+      kv.garp_master_refresh_repeat != '' %}
 {{ '  ' ~ 'garp_master_refresh_repeat' ~ ' ' ~ kv.garp_master_refresh_repeat }}
 {% endif %}
 {% if kv.garp_interval is defined and kv.garp_interval != '' %}
@@ -87,13 +89,16 @@
 {% if kv.gna_interval is defined and kv.gna_interval != '' %}
 {{ '  ' ~ 'gna_interval' ~ ' ' ~ kv.gna_interval }}
 {% endif %}
-{% if kv.lower_prio_no_advert is defined and kv.lower_prio_no_advert == 'true' %}
+{% if kv.lower_prio_no_advert is defined and
+      kv.lower_prio_no_advert == 'true' %}
 {{ '  ' + 'lower_prio_no_advert' + ' ' + kv.lower_prio_no_advert }}
 {% endif %}
-{% if kv.higher_prio_send_advert is defined and kv.higher_prio_send_advert == 'true' %}
+{% if kv.higher_prio_send_advert is defined and
+      kv.higher_prio_send_advert == 'true' %}
 {{ '  ' + 'higher_prio_send_advert' + ' ' + kv.higher_prio_send_advert }}
 {% endif %}
-{% if kv.prompte_secondaries is defined and kv.prompte_secondaries == 'true' %}
+{% if kv.prompte_secondaries is defined and
+      kv.prompte_secondaries == 'true' %}
 {{ '  ' + 'prompte_secondaries' + ' ' + kv.prompte_secondaries }}
 {% endif %}
 {% if kv.virtual_router_id is defined and kv.virtual_router_id != '' %}
@@ -108,8 +113,8 @@
 {% if kv.authentication is defined and kv.authentication != '' %}
 {{ '  ' + 'authentication' + ' {' }}
 {% for kva in kv.authentication %}
-{% if kva.type is defined and kva.type in ['PASS', 'AH']
-  and kva.password is defined and kva.password != '' %}
+{% if kva.type is defined and kva.type in ['PASS', 'AH'] and
+      kva.password is defined and kva.password != '' %}
 {{ '    ' + 'auth_type' + ' ' + kva.type }}
 {{ '    ' ~ 'auth_pass' ~ ' ' ~ kva.password }}
 {% endif %}
@@ -123,7 +128,8 @@
 {% endfor %}
 {{ '  }'}}
 {% endif %}
-{% if kv.virtual_ipaddress_excluded is defined and kv.virtual_ipaddress_excluded != '' %}
+{% if kv.virtual_ipaddress_excluded is defined and
+      kv.virtual_ipaddress_excluded != '' %}
 {{ '  ' + 'virtual_ipaddress_excluded' + ' {' }}
 {% for kvv in kv.virtual_ipaddress_excluded %}
 {{ '    ' + kvv }}
@@ -153,7 +159,8 @@
 {% if kv.nopreempt is defined and kv.nopreempt == 'true' %}
 {{ '  ' + 'nopreempt' }}
 {% endif %}
-{% if kv.skip_check_adv_addr is defined and kv.skip_check_adv_addr in ['true', 'false'] %}
+{% if kv.skip_check_adv_addr is defined and
+      kv.skip_check_adv_addr in ['true', 'false'] %}
 {{ '  ' + 'skip_check_adv_addr' + ' ' + kv.skip_check_adv_addr }}
 {% endif %}
 {% if kv.strict_mode is defined and kv.strict_mode in ['true', 'false'] %}

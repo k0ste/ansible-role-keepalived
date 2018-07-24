@@ -4,8 +4,8 @@
 {% if kv.delay_loop is defined and kv.delay_loop != '' %}
 {{ '  ' ~ 'delay_loop' ~ ' ' ~ kv.delay_loop }}
 {% endif %}
-{% if kv.lb_algo is defined and kv.lb_algo in ['rr', 'wrr', 'lc', 'wlc', 'lblc'
-                                               'dh', 'sh'] %}
+{% if kv.lb_algo is defined and
+      kv.lb_algo in ['rr', 'wrr', 'lc', 'wlc', 'lblc', 'dh', 'sh'] %}
 {{ '  ' + 'lb_algo' + ' ' + kv.lb_algo }}
 {% endif %}
 {% if kv.hashed is defined and kv.hashed == 'true' %}
@@ -30,7 +30,7 @@
 {{ '  ' + 'ops' }}
 {% endif %}
 {% if kv.lb_kind is defined and kv.lb_kind in ['NAT', 'DR', 'TUN'] %}
-{{ '  ' + 'lb_kind' + ' ' + kv.lb_algo }}
+{{ '  ' + 'lb_kind' + ' ' + kv.lb_kind }}
 {% endif %}
 {% if kv.persistence_engine is defined and kv.persistence_engine != '' %}
 {{ '  ' ~ 'persistence_engine' ~ ' ' ~ kv.persistence_engine }}
@@ -38,7 +38,8 @@
 {% if kv.persistence_timeout is defined and kv.persistence_timeout != '' %}
 {{ '  ' ~ 'persistence_timeout' ~ ' ' ~ kv.persistence_timeout }}
 {% endif %}
-{% if kv.persistence_granularity is defined and kv.persistence_granularity != '' %}
+{% if kv.persistence_granularity is defined and
+      kv.persistence_granularity != '' %}
 {{ '  ' + 'persistence_granularity' + ' ' + kv.persistence_granularity }}
 {% endif %}
 {% if kv.protocol is defined and kv.protocol in ['TCP' 'UDP', 'SCTP'] %}
@@ -79,7 +80,8 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-{% if kv.sorry_server_inhibit is defined and kv.sorry_server_inhibit == 'true' %}
+{% if kv.sorry_server_inhibit is defined and
+      kv.sorry_server_inhibit == 'true' %}
 {{ '  ' + 'sorry_server_inhibit' }}
 {% endif %}
 {% if kv.real_server is defined and kv.real_server != '' %}
@@ -111,8 +113,8 @@
 {% endif %}
 {% if kvr.checks is defined and kvr.checks != '' %}
 {% for kvrc in kvr.checks %}
-{% if kvrc.check_method is defined and kvrc.check_method in ['HTTP_GET',
-                                                             'SSL_GET'] %}
+{% if kvrc.check_method is defined and
+      kvrc.check_method in ['HTTP_GET', 'SSL_GET'] %}
 {{ '    ' + kvrc.check_method + ' {' }}
 {% if kvrc.nb_get_retry is defined and kvrc.nb_get_retry != '' %}
 {{ '      ' ~ 'nb_get_retry' ~ ' ' ~ kvrc.nb_get_retry }}
@@ -165,8 +167,8 @@
 {% endif %}
 {% elif kvrc.check_method is defined and kvrc.check_method in ['DNS_CHECK'] %}
 {{ '    ' + kvrc.check_method + ' {' }}
-{% if kvrc.query_type is defined and kvrc.query_type in ['A', 'NS',
-                                   'CNAME', 'SOA', 'MX', 'TXT', 'AAAA'] %}
+{% if kvrc.query_type is defined and
+      kvrc.query_type in ['A', 'NS', 'CNAME', 'SOA', 'MX', 'TXT', 'AAAA'] %}
 {{ '      ' + 'type' + ' ' + kvrc.query_type }}
 {% endif %}
 {% if kvrc.name is defined and kvrc.name != '' %}
