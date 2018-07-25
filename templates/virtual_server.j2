@@ -42,7 +42,7 @@
       kv.persistence_granularity != '' %}
 {{ '  ' + 'persistence_granularity' + ' ' + kv.persistence_granularity }}
 {% endif %}
-{% if kv.protocol is defined and kv.protocol in ['TCP' 'UDP', 'SCTP'] %}
+{% if kv.protocol is defined and kv.protocol in ['TCP', 'UDP', 'SCTP'] %}
 {{ '  ' + 'protocol' + ' ' + kv.protocol }}
 {% endif %}
 {% if kv.ha_suspend is defined and kv.ha_suspend == 'true' %}
