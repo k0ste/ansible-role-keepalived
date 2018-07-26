@@ -7,13 +7,12 @@
     owner: "root"
     group: "root"
     mode: "0644"
-    validate: "keepalived -lt -f %s"
+    validate: "keepalived -t -f %s"
   notify:
   - "Start keepalived"
 - name: keepalived | Enable keepalived service
   service:
     name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
-    state: "started"
     enabled: "yes"
   when:
   - "hostvars[inventory_hostname]['keepalived_enable'] is defined"
