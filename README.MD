@@ -10,13 +10,13 @@ Role for deploy Keepalived - framework for load balancing and high availability.
 
 ```yaml
 ---
-# Enable keepalived after deploy
+# Enable keepalived after deploy.
 keepalived_enable: 'true'
-# Restart keepalived after deploy
+# Restart keepalived after deploy.
 keepalived_restart: 'false'
-# Install keepalived
+# Install keepalived.
 keepalived_install_package: 'true'
-# What to do when 'keepalived_restart' set to 'true' - 'reload' or 'restart'
+# What to do when 'keepalived_restart' set to 'true' - 'reload' or 'restart'.
 keepalived_restart_method: 'reload'
 
 keepalived:
@@ -625,7 +625,8 @@ keepalived:
 # lblc - Locality-Based Least-Connection
 # dh - Destination Hash
 # sh - Source Hash
-    lb_algo: 'rr'
+# ! lb_algo - deprecated synonym for lvs_sched.
+    lvs_sched: 'rr'
 # Enable hashed entry.
     hashed: 'false'
 # Enable flag-1 for scheduler (-b flag-1 in ipvsadm).
@@ -641,7 +642,8 @@ keepalived:
 # Enable One-Packet-Scheduling for UDP (-O in ipvsadm).
     ops: 'false'
 # LVS forwarding method ('NAT', 'DR' or 'TUN').
-    lb_kind: 'NAT'
+# ! lb_kind - deprecated synonym for lvs_method.
+    lvs_method: 'NAT'
 # LVS persistence engine name.
     persistence_engine: 'lvs_name'
 # LVS persistence timeout in seconds, default 6 minutes.

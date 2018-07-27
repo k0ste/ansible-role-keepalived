@@ -4,6 +4,11 @@
 {% if kv.delay_loop is defined and kv.delay_loop != '' %}
 {{ '  ' ~ 'delay_loop' ~ ' ' ~ kv.delay_loop }}
 {% endif %}
+{% if kv.lvs_sched is defined and
+      kv.lvs_sched in ['rr', 'wrr', 'lc', 'wlc', 'lblc', 'dh', 'sh'] %}
+{{ '  ' + 'lvs_sched' + ' ' + kv.lvs_sched }}
+{% endif %}
+{# lb_algo - deprecated synonym for lvs_sched #}
 {% if kv.lb_algo is defined and
       kv.lb_algo in ['rr', 'wrr', 'lc', 'wlc', 'lblc', 'dh', 'sh'] %}
 {{ '  ' + 'lb_algo' + ' ' + kv.lb_algo }}
@@ -29,6 +34,10 @@
 {% if kv.ops is defined and kv.ops == 'true' %}
 {{ '  ' + 'ops' }}
 {% endif %}
+{% if kv.lvs_method is defined and kv.lvs_method in ['NAT', 'DR', 'TUN'] %}
+{{ '  ' + 'lvs_method' + ' ' + kv.lvs_method }}
+{% endif %}
+{# lb_kind - deprecated synonym for lvs_method #}
 {% if kv.lb_kind is defined and kv.lb_kind in ['NAT', 'DR', 'TUN'] %}
 {{ '  ' + 'lb_kind' + ' ' + kv.lb_kind }}
 {% endif %}
@@ -39,14 +48,14 @@
 {{ '  ' ~ 'persistence_timeout' ~ ' ' ~ kv.persistence_timeout }}
 {% endif %}
 {% if kv.persistence_granularity is defined and
-      kv.persistence_granularity != '' %}
+      kv.persistence_granularity | ipaddr('netmask') %}
 {{ '  ' + 'persistence_granularity' + ' ' + kv.persistence_granularity }}
 {% endif %}
 {% if kv.protocol is defined and kv.protocol in ['TCP', 'UDP', 'SCTP'] %}
 {{ '  ' + 'protocol' + ' ' + kv.protocol }}
 {% endif %}
 {% if kv.ha_suspend is defined and kv.ha_suspend == 'true' %}
-{{ '  ' + 'ha_suspend' + ' ' + kv.ha_suspend }}
+{{ '  ' + 'ha_suspend' }}
 {% endif %}
 {% if kv.virtualhost is defined and kv.virtualhost != '' %}
 {{ '  ' + 'virtualhost' + ' ' + kv.virtualhost }}
@@ -69,7 +78,7 @@
 {% if kv.quorum_down is defined and kv.quorum_down != '' %}
 {{ '  ' + 'quorum_down' + ' \"' + kv.quorum_down + '\"' }}
 {% endif %}
-{% if kv.ip_family is defined and kv.ip_family != '' %}
+{% if kv.ip_family is defined and kv.ip_family in ['inet', 'inet6'] %}
 {{ '  ' + 'ip_family' + ' ' + kv.ip_family }}
 {% endif %}
 {% if kv.sorry_server is defined and kv.sorry_server != '' %}
