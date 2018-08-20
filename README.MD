@@ -618,13 +618,19 @@ keepalived:
 # Delay timer for service polling.
     delay_loop: '6'
 # LVS scheduler
-# rr - Round-Robin
-# wrr - Weighted Round-Robin
-# lc - Least-Connection
-# wlc - Weighted Least-Connection
-# lblc - Locality-Based Least-Connection
-# dh - Destination Hash
-# sh - Source Hash
+# rr - round-robin scheduling
+# wrr - weighted round-robin scheduling
+# lc - least-connection scheduling
+# wlc - weighted least-connection scheduling
+# sh - source hashing scheduling
+# lblc - locality-based least-connection scheduling
+# mh - maglev hashing scheduling
+# dh - destination hashing scheduling
+# fo - weighted failover scheduling
+# ovf - weighted overflow scheduling
+# lblcr - locality-based least-connection with replication scheduling
+# sed - shortest expected delay scheduling
+# nq - never queue scheduling
 # ! lb_algo - deprecated synonym for lvs_sched.
     lvs_sched: 'rr'
 # Enable hashed entry.
@@ -639,6 +645,10 @@ keepalived:
     sh_port: 'false'
 # Enable sh-fallback for sh scheduler (-b sh-fallback in ipvsadm).
     sh_fallback: 'false'
+# Enable mh-port for mh scheduler (-b mh-port in ipvsadm).
+    mh_port: 'false'
+# Enable mh-fallback for mh scheduler  (-b mh-fallback in ipvsadm).
+    mh_fallback: 'false'
 # Enable One-Packet-Scheduling for UDP (-O in ipvsadm).
     ops: 'false'
 # LVS forwarding method ('NAT', 'DR' or 'TUN').

@@ -5,12 +5,14 @@
 {{ '  ' ~ 'delay_loop' ~ ' ' ~ kv.delay_loop }}
 {% endif %}
 {% if kv.lvs_sched is defined and
-      kv.lvs_sched in ['rr', 'wrr', 'lc', 'wlc', 'lblc', 'dh', 'sh'] %}
+      kv.lvs_sched in ['rr', 'wrr', 'lc', 'wlc', 'lblc', 'sh', 'mh', 'dh', 'fo',
+                       'ovf', 'lblcr', 'sed', 'nq'] %}
 {{ '  ' + 'lvs_sched' + ' ' + kv.lvs_sched }}
 {% endif %}
 {# lb_algo - deprecated synonym for lvs_sched #}
 {% if kv.lb_algo is defined and
-      kv.lb_algo in ['rr', 'wrr', 'lc', 'wlc', 'lblc', 'dh', 'sh'] %}
+      kv.lb_algo in ['rr', 'wrr', 'lc', 'wlc', 'lblc', 'sh', 'mh', 'dh', 'fo',
+                     'ovf', 'lblcr', 'sed', 'nq'] %}
 {{ '  ' + 'lb_algo' + ' ' + kv.lb_algo }}
 {% endif %}
 {% if kv.hashed is defined and kv.hashed == 'true' %}
@@ -26,10 +28,16 @@
 {{ '  ' + 'flag-3' }}
 {% endif %}
 {% if kv.sh_port is defined and kv.sh_port == 'true' %}
-{{ '  ' + 'sh_port' }}
+{{ '  ' + 'sh-port' }}
 {% endif %}
 {% if kv.sh_fallback is defined and kv.sh_fallback == 'true' %}
-{{ '  ' + 'sh_fallback' }}
+{{ '  ' + 'sh-fallback' }}
+{% endif %}
+{% if kv.mh_port is defined and kv.mh_port == 'true' %}
+{{ '  ' + 'mh-port' }}
+{% endif %}
+{% if kv.mh_fallback is defined and kv.mh_fallback == 'true' %}
+{{ '  ' + 'mh-fallback' }}
 {% endif %}
 {% if kv.ops is defined and kv.ops == 'true' %}
 {{ '  ' + 'ops' }}
