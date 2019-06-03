@@ -9,6 +9,7 @@
        ['reload', 'restart']"
     msg: "'keepalived_restart_method_restart_method' must be in 'reload'
           or 'restart'."
+    quiet: "true"
   when:
   - "hostvars[inventory_hostname]['keepalived_restart_method'] is defined"
 - name: keepalived | Set service restart method when restart method is defined
