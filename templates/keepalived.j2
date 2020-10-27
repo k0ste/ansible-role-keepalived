@@ -2,7 +2,7 @@
 {{ '# ' + ansible_managed }}
 {{ '# ' + 'Do not edit manually' }}
 
-{% for k in hostvars[inventory_hostname]['keepalived'] %}
+{% for k in vars['keepalived_settings'] %}
 {% if k.global is defined and k.global != '' %}
 {% include 'global_defs.j2' %}
 {% endif %}

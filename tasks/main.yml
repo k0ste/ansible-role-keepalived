@@ -1,10 +1,16 @@
 ---
-- import_tasks: pre_requisite.yml
-- include_tasks: packages.yml
+- import_tasks: "pre_requisite.yml"
+- include_tasks: "packages.yml"
   when:
-  - "hostvars[inventory_hostname]['keepalived_install_package'] is defined"
-  - "hostvars[inventory_hostname]['keepalived_install_package'] == 'true'"
-- include_tasks: deploy_keepalived.yml
+  - "hostvars[inventory_hostname]['keepalived'] is defined"
+  - "hostvars[inventory_hostname]['keepalived'] != ''"
+  - "hostvars[inventory_hostname]['keepalived'] |
+     json_query(vars['keepalived_install_package']) is defined"
+  - "hostvars[inventory_hostname]['keepalived'] |
+     json_query(vars['keepalived_install_package']) == 'true'"
+  vars:
+    keepalived_install_package: "[] | map(&install_package || 'false', @) | [0]"
+- include_tasks: "deploy_keepalived.yml"
   when:
   - "hostvars[inventory_hostname]['keepalived'] is defined"
   - "hostvars[inventory_hostname]['keepalived'] != ''"

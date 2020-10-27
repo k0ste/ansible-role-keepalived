@@ -1,30 +1,33 @@
 ---
 - name: keepalived | Add the OS specific variables
-  include_vars: "{{
-    hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
+  ansible.builtin.include_vars:
+    file: "{{ hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
+- name: keepalived | Set facts about keepalived role
+  ansible.builtin.set_fact:
+    keepalived_settings: "{{ hostvars[inventory_hostname]['keepalived'] |
+      json_query('[].settings[]') }}"
+    keepalived_restart_state: "{{ hostvars[inventory_hostname]['keepalived'] |
+      json_query('[].restart_method[] | [0]') }}"
 - name: keepalived | Assert that restart method variable have proper value
-  assert:
+  ansible.builtin.assert:
     that:
-    - "hostvars[inventory_hostname]['keepalived_restart_method'] in
-       ['reload', 'restart']"
-    msg: "'keepalived_restart_method_restart_method' must be in 'reload'
-          or 'restart'."
+    - "vars['keepalived_restart_state'] in ['reload', 'restart']"
+    msg: "'restart_method' must be in 'reload' or 'restart'."
     quiet: "true"
   when:
   - "hostvars[inventory_hostname]['keepalived_restart_method'] is defined"
 - name: keepalived | Set service restart method when restart method is defined
-  set_fact:
-    keepalived_restart_cmd: "{{
-      hostvars[inventory_hostname]['keepalived_restart_method'] + 'ed' }}"
+  ansible.builtin.set_fact:
+    keepalived_restart_cmd: "{{ vars['keepalived_restart_state'] + 'ed' }}"
   when:
-  - "hostvars[inventory_hostname]['keepalived_restart_method'] is defined"
+  - "vars['keepalived_restart_state'] is defined"
 - name: keepalived | Set service restart method to SIGHUP
-  set_fact:
+  ansible.builtin.set_fact:
     keepalived_restart_cmd: "reloaded"
   when:
   - "hostvars[inventory_hostname]['keepalived_restart_method'] is not defined"
 - name: keepalived | Make work dir
-  file:
+  ansible.builtin.file:
     path: "{{ hostvars[inventory_hostname]['keepalived_destination'] }}"
     state: "directory"
     owner: "root"
