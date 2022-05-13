@@ -57,7 +57,7 @@
 {% if kv.unicast_peer is defined and kv.unicast_peer != '' %}
 {{ '  ' + 'unicast_peer' + ' {' }}
 {% for kvu in kv.unicast_peer %}
-{% if kvu | ipaddr('host') %}
+{% if kvu | ansible.utils.ipaddr('host') %}
 {{ '    ' + kvu }}
 {% endif %}
 {% endfor %}

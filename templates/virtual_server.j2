@@ -1,151 +1,149 @@
 {% for kv in k.virtual_server %}
 {% if kv.instance is defined and kv.instance != '' %}
-{{ 'virtual_server' ~ ' ' ~ kv.instance + ' {'}}
+{{ 'virtual_server ' ~ kv.instance + ' {' }}
 {% if kv.delay_loop is defined and kv.delay_loop != '' %}
-{{ '  ' ~ 'delay_loop' ~ ' ' ~ kv.delay_loop }}
+{{ '  delay_loop ' ~ kv.delay_loop }}
 {% endif %}
-{% if kv.lvs_sched is defined and
-      kv.lvs_sched in ['rr', 'wrr', 'lc', 'wlc', 'lblc', 'sh', 'mh', 'dh', 'fo',
-                       'ovf', 'lblcr', 'sed', 'nq'] %}
-{{ '  ' + 'lvs_sched' + ' ' + kv.lvs_sched }}
+{% if kv.lvs_sched is defined and kv.lvs_sched in ['rr', 'wrr', 'lc', 'wlc',
+  'lblc', 'sh', 'mh', 'dh', 'fo', 'ovf', 'lblcr', 'sed', 'nq'] %}
+{{ '  lvs_sched' + ' ' + kv.lvs_sched }}
 {% endif %}
 {# lb_algo - deprecated synonym for lvs_sched #}
-{% if kv.lb_algo is defined and
-      kv.lb_algo in ['rr', 'wrr', 'lc', 'wlc', 'lblc', 'sh', 'mh', 'dh', 'fo',
-                     'ovf', 'lblcr', 'sed', 'nq'] %}
-{{ '  ' + 'lb_algo' + ' ' + kv.lb_algo }}
+{% if kv.lb_algo is defined and kv.lb_algo in ['rr', 'wrr', 'lc', 'wlc', 'lblc',
+  'sh', 'mh', 'dh', 'fo', 'ovf', 'lblcr', 'sed', 'nq'] %}
+{{ '  lb_algo ' + kv.lb_algo }}
 {% endif %}
 {% if kv.hashed is defined and kv.hashed == 'true' %}
-{{ '  ' + 'hashed' }}
+{{ '  hashed' }}
 {% endif %}
 {% if kv.flag_1 is defined and kv.flag_1 == 'true' %}
-{{ '  ' + 'flag-1' }}
+{{ '  flag-1' }}
 {% endif %}
 {% if kv.flag_2 is defined and kv.flag_2 == 'true' %}
-{{ '  ' + 'flag-2' }}
+{{ '  flag-2' }}
 {% endif %}
 {% if kv.flag_3 is defined and kv.flag_3 == 'true' %}
-{{ '  ' + 'flag-3' }}
+{{ '  flag-3' }}
 {% endif %}
 {% if kv.sh_port is defined and kv.sh_port == 'true' %}
-{{ '  ' + 'sh-port' }}
+{{ '  sh-port' }}
 {% endif %}
 {% if kv.sh_fallback is defined and kv.sh_fallback == 'true' %}
-{{ '  ' + 'sh-fallback' }}
+{{ '  sh-fallback' }}
 {% endif %}
 {% if kv.mh_port is defined and kv.mh_port == 'true' %}
-{{ '  ' + 'mh-port' }}
+{{ '  mh-port' }}
 {% endif %}
 {% if kv.mh_fallback is defined and kv.mh_fallback == 'true' %}
-{{ '  ' + 'mh-fallback' }}
+{{ '  mh-fallback' }}
 {% endif %}
 {% if kv.ops is defined and kv.ops == 'true' %}
-{{ '  ' + 'ops' }}
+{{ '  ops' }}
 {% endif %}
 {% if kv.lvs_method is defined and kv.lvs_method in ['NAT', 'DR', 'TUN'] %}
-{{ '  ' + 'lvs_method' + ' ' + kv.lvs_method }}
+{{ '  lvs_method ' + kv.lvs_method }}
 {% endif %}
 {# lb_kind - deprecated synonym for lvs_method #}
 {% if kv.lb_kind is defined and kv.lb_kind in ['NAT', 'DR', 'TUN'] %}
-{{ '  ' + 'lb_kind' + ' ' + kv.lb_kind }}
+{{ '  lb_kind ' + kv.lb_kind }}
 {% endif %}
 {% if kv.persistence_engine is defined and kv.persistence_engine != '' %}
-{{ '  ' ~ 'persistence_engine' ~ ' ' ~ kv.persistence_engine }}
+{{ '  persistence_engine ' ~ kv.persistence_engine }}
 {% endif %}
 {% if kv.persistence_timeout is defined and kv.persistence_timeout != '' %}
-{{ '  ' ~ 'persistence_timeout' ~ ' ' ~ kv.persistence_timeout }}
+{{ '  persistence_timeout ' ~ kv.persistence_timeout }}
 {% endif %}
 {% if kv.persistence_granularity is defined and
-      kv.persistence_granularity | ipaddr('netmask') %}
-{{ '  ' + 'persistence_granularity' + ' ' + kv.persistence_granularity }}
+  kv.persistence_granularity | ansible.utils.ipaddr('netmask') %}
+{{ '  persistence_granularity ' + kv.persistence_granularity }}
 {% endif %}
 {% if kv.protocol is defined and kv.protocol in ['TCP', 'UDP', 'SCTP'] %}
-{{ '  ' + 'protocol' + ' ' + kv.protocol }}
+{{ '  protocol  ' + kv.protocol }}
 {% endif %}
 {% if kv.ha_suspend is defined and kv.ha_suspend == 'true' %}
-{{ '  ' + 'ha_suspend' }}
+{{ '  ha_suspend' }}
 {% endif %}
 {% if kv.virtualhost is defined and kv.virtualhost != '' %}
-{{ '  ' + 'virtualhost' + ' ' + kv.virtualhost }}
+{{ '  virtualhost ' + kv.virtualhost }}
 {% endif %}
 {% if kv.alpha is defined and kv.alpha == 'true' %}
-{{ '  ' + 'alpha' }}
+{{ '  alpha' }}
 {% endif %}
 {% if kv.omega is defined and kv.omega == 'true' %}
-{{ '  ' + 'omega' }}
+{{ '  omega' }}
 {% endif %}
 {% if kv.quorum is defined and kv.quorum != '' %}
-{{ '  ' + 'quorum' + ' ' + kv.quorum }}
+{{ '  quorum ' + kv.quorum }}
 {% endif %}
 {% if kv.hysteresis is defined and kv.hysteresis != '' %}
-{{ '  ' + 'hysteresis' + ' ' + kv.hysteresis }}
+{{ '  hysteresis ' + kv.hysteresis }}
 {% endif %}
 {% if kv.quorum_up is defined and kv.quorum_up != '' %}
-{{ '  ' + 'quorum_up' + ' \"' + kv.quorum_up + '\"' }}
+{{ '  quorum_up \"' + kv.quorum_up + '\"' }}
 {% endif %}
 {% if kv.quorum_down is defined and kv.quorum_down != '' %}
-{{ '  ' + 'quorum_down' + ' \"' + kv.quorum_down + '\"' }}
+{{ '  quorum_down \"' + kv.quorum_down + '\"' }}
 {% endif %}
 {% if kv.ip_family is defined and kv.ip_family in ['inet', 'inet6'] %}
-{{ '  ' + 'ip_family' + ' ' + kv.ip_family }}
+{{ '  ip_family ' + kv.ip_family }}
 {% endif %}
 {% if kv.sorry_server is defined and kv.sorry_server != '' %}
 {% for kvs in kv.sorry_server %}
-{% if kvs.address is defined and kvs.address != ''
-  and kvs.port is defined and kvs.port != '' %}
-{{ '  ' ~ 'sorry_server' ~ ' ' ~ kvs.address ~ ' ' ~ kvs.port }}
+{% if kvs.address is defined and kvs.address != '' and kvs.port is defined
+  and kvs.port != '' %}
+{{ '  sorry_server ' ~ kvs.address ~ ' ' ~ kvs.port }}
 {% endif %}
 {% endfor %}
 {% endif %}
 {% if kv.sorry_server_inhibit is defined and
-      kv.sorry_server_inhibit == 'true' %}
-{{ '  ' + 'sorry_server_inhibit' }}
+  kv.sorry_server_inhibit == 'true' %}
+{{ '  sorry_server_inhibit' }}
 {% endif %}
 {% if kv.real_server is defined and kv.real_server != '' %}
 {% for kvr in kv.real_server %}
 {% if kvr.address is defined and kvr.address != '' %}
 {% if kvr.port is defined and kvr.port != '' %}
-{{ '    ' ~ 'real_server' ~ ' ' ~ kvr.address ~ ' ' ~ kvr.port ~ ' {' }}
+{{ '    real_server ' ~ kvr.address ~ ' ' ~ kvr.port ~ ' {' }}
 {% else %}
-{{ '    ' + 'real_server' + ' ' + kvr.address + ' {' }}
+{{ '    real_server ' + kvr.address + ' {' }}
 {% endif %}
 {% endif %}
 {% if kvr.weight is defined and kvr.weight != '' %}
-{{ '    ' ~ 'weight' ~ ' ' ~ kvr.weight }}
+{{ '    weight ' ~ kvr.weight }}
 {% endif %}
 {% if kvr.inhibit_on_failure is defined and kvr.inhibit_on_failure == 'true' %}
-{{ '    ' + 'inhibit_on_failure' }}
+{{ '    inhibit_on_failure' }}
 {% endif %}
 {% if kvr.notify_up is defined and kvr.notify_up != '' %}
-{{ '    ' + 'notify_up' + ' \"' + kvr.notify_up + '\"' }}
+{{ '    notify_up \"' + kvr.notify_up + '\"' }}
 {% endif %}
 {% if kvr.notify_down is defined and kvr.notify_down != '' %}
-{{ '    ' + 'notify_down' + ' \"' + kvr.notify_down + '\"' }}
+{{ '    notify_down \"' + kvr.notify_down + '\"' }}
 {% endif %}
 {% if kvr.uthreshold is defined and kvr.uthreshold != '' %}
-{{ '    ' ~ 'uthreshold' ~ ' ' ~ kvr.uthreshold }}
+{{ '    uthreshold ' ~ kvr.uthreshold }}
 {% endif %}
 {% if kvr.lthreshold is defined and kvr.lthreshold != '' %}
-{{ '    ' ~ 'lthreshold' ~ ' ' ~ kvr.lthreshold }}
+{{ '    lthreshold ' ~ kvr.lthreshold }}
 {% endif %}
 {% if kvr.checks is defined and kvr.checks != '' %}
 {% for kvrc in kvr.checks %}
-{% if kvrc.check_method is defined and
-      kvrc.check_method in ['HTTP_GET', 'SSL_GET'] %}
+{% if kvrc.check_method is defined and kvrc.check_method in
+  ['HTTP_GET', 'SSL_GET'] %}
 {{ '    ' + kvrc.check_method + ' {' }}
 {% if kvrc.nb_get_retry is defined and kvrc.nb_get_retry != '' %}
-{{ '      ' ~ 'nb_get_retry' ~ ' ' ~ kvrc.nb_get_retry }}
+{{ '      nb_get_retry ' ~ kvrc.nb_get_retry }}
 {% endif %}
 {% if kvrc.urls is defined and kvrc.urls != '' %}
 {% for url in kvrc.urls %}
 {% if url.path is defined and url.path != '' %}
-{{ '      ' + 'url' + ' {' }}
-{{ '        ' + 'path' + ' ' + url.path }}
+{{ '      url {' }}
+{{ '        path ' + url.path }}
 {% if url.digest is defined and url.digest != '' %}
-{{ '        ' ~ 'digest' ~ ' ' ~ url.digest }}
+{{ '        digest ' ~ url.digest }}
 {% endif %}
 {% if url.status_code is defined and url.status_code != '' %}
-{{ '        ' ~ 'status_code' ~ ' ' ~ url.status_code }}
+{{ '        status_code ' ~ url.status_code }}
 {% endif %}
 {{ '      }' }}
 {% endif %}
@@ -156,28 +154,29 @@
 {% elif kvrc.check_method is defined and kvrc.check_method in ['SMTP_CHECK'] %}
 {{ '    ' + kvrc.check_method + ' {' }}
 {% if kvrc.helo_name is defined and kvrc.helo_name != '' %}
-{{ '      ' + 'helo_name' + ' \"' + kvrc.helo_name + '\"' }}
+{{ '      helo_name \"' + kvrc.helo_name + '\"' }}
 {% endif %}
 {% if kvrc.hosts is defined and kvrc.hosts != '' %}
 {% for host in kvrc.hosts %}
-{{ '      ' + 'host' + ' {' }}
-{% if host.connect_ip is defined and host.connect_ip | ipaddr('host') %}
-{{ '        ' + 'connect_ip' + ' ' + host.connect_ip }}
+{{ '      host {' }}
+{% if host.connect_ip is defined and host.connect_ip |
+  ansible.utils.ipaddr('host') %}
+{{ '        connect_ip ' + host.connect_ip }}
 {% endif %}
 {% if host.connect_port is defined and host.connect_port != '' %}
-{{ '        ' ~ 'connect_port' ~ ' ' ~ host.connect_port }}
+{{ '        connect_port ' ~ host.connect_port }}
 {% endif %}
-{% if host.bindto is defined and host.bindto | ipaddr('host') %}
-{{ '        ' + 'bindto' + ' ' + host.bindto }}
+{% if host.bindto is defined and host.bindto | ansible.utils.ipaddr('host') %}
+{{ '        bindto ' + host.bindto }}
 {% endif %}
 {% if host.bind_port is defined and host.bind_port != '' %}
-{{ '        ' ~ 'bind_port' ~ ' ' ~ host.bind_port }}
+{{ '        bind_port ' ~ host.bind_port }}
 {% endif %}
 {% if host.connect_timeout is defined and host.connect_timeout != '' %}
-{{ '        ' ~ 'connect_timeout' ~ ' ' ~ host.connect_timeout }}
+{{ '        connect_timeout ' ~ host.connect_timeout }}
 {% endif %}
 {% if host.fwmark is defined and host.fwmark != '' %}
-{{ '        ' ~ 'fwmark' ~ ' ' ~ kvrc.fwmark }}
+{{ '        fwmark ' ~ kvrc.fwmark }}
 {% endif %}
 {{ '      }' }}
 {% endfor %}
@@ -186,26 +185,26 @@
 {{ '    ' + kvrc.check_method + ' {' }}
 {% if kvrc.query_type is defined and
       kvrc.query_type in ['A', 'NS', 'CNAME', 'SOA', 'MX', 'TXT', 'AAAA'] %}
-{{ '      ' + 'type' + ' ' + kvrc.query_type }}
+{{ '      type ' + kvrc.query_type }}
 {% endif %}
 {% if kvrc.name is defined and kvrc.name != '' %}
-{{ '      ' + 'name' + ' ' + kvrc.name }}
+{{ '      name ' + kvrc.name }}
 {% endif %}
 {% elif kvrc.check_method is defined and kvrc.check_method in ['MISC_CHECK'] %}
 {{ '    ' + kvrc.check_method + ' {' }}
 {% if kvrc.misc_path is defined and kvrc.misc_path != '' %}
-{{ '      ' + 'misc_path' + ' \"' + kvrc.misc_path + '\"' }}
+{{ '      misc_path \"' + kvrc.misc_path + '\"' }}
 {% endif %}
 {% if kvrc.misc_dynamic is defined and kvrc.misc_dynamic != '' %}
-{{ '      ' ~ 'misc_dynamic' ~ ' ' ~ kvrc.misc_dynamic }}
+{{ '      misc_dynamic ' ~ kvrc.misc_dynamic }}
 {% endif %}
 {% if kvrc.misc_user is defined and kvrc.misc_user != '' %}
 {% for user in kvrc.misc_user %}
 {% if user.username is defined and user.username != '' %}
 {% if user.group is defined and user.group != '' %}
-{{ '      ' ~ 'user' ~ ' ' ~ user.username ~ ' ' ~ user.group }}
+{{ '      user ' ~ user.username ~ ' ' ~ user.group }}
 {% else %}
-{{ '      ' ~ 'user' ~ ' ' ~ user.username }}
+{{ '      user ' ~ user.username }}
 {% endif %}
 {% endif %}
 {% endfor %}

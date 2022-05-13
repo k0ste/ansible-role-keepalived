@@ -7,13 +7,15 @@
 {% if kvrc.warmup is defined and kvrc.warmup != '' %}
 {{ '      ' ~ 'warmup' ~ ' ' ~ kvrc.warmup }}
 {% endif %}
-{% if kvrc.connect_ip is defined and kvrc.connect_ip | ipaddr('host') %}
+{% if kvrc.connect_ip is defined and kvrc.connect_ip |
+  ansible.utils.ipaddr('host') %}
 {{ '      ' + 'connect_ip' + ' ' + kvrc.connect_ip }}
 {% endif %}
 {% if kvrc.connect_port is defined and kvrc.connect_port != '' %}
 {{ '      ' ~ 'connect_port' ~ ' ' ~ kvrc.connect_port }}
 {% endif %}
-{% if kvrc.bindto is defined and kvrc.bindto | ipaddr('host') %}
+{% if kvrc.bindto is defined and kvrc.bindto |
+  ansible.utils.ipaddr('host') %}
 {{ '      ' + 'bindto' + ' ' + kvrc.bindto }}
 {% endif %}
 {% if kvrc.bind_port is defined and kvrc.bind_port != '' %}

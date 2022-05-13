@@ -2,22 +2,22 @@
 - name: keepalived | Deploy keepalived configuration
   ansible.builtin.template:
     src: "keepalived.j2"
-    dest: "{{ hostvars[inventory_hostname]['keepalived_destination'] + '/' +
-      'keepalived.conf' }}"
+    dest: "{{ hostvars[inventory_hostname]['keepalived_destination'] +
+      '/keepalived.conf' }}"
     owner: "root"
     group: "root"
     mode: "0644"
     validate: "keepalived -t -f %s"
   notify:
-  - "Restart keepalived"
+    - "Restart keepalived"
 - name: keepalived | Enable keepalived service
   ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
     enabled: "yes"
   when:
-  - "hostvars[inventory_hostname]['keepalived'] |
-     json_query(vars['keepalived_enable']) is defined"
-  - "hostvars[inventory_hostname]['keepalived'] |
-     json_query(vars['keepalived_enable']) == 'true'"
+    - "hostvars[inventory_hostname]['keepalived'] |
+       json_query(vars['keepalived_enable']) is defined"
+    - "hostvars[inventory_hostname]['keepalived'] |
+       json_query(vars['keepalived_enable']) == 'true'"
   vars:
     keepalived_enable: "[] | map(&enable || 'false', @) | [0]"
