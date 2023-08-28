@@ -1,5 +1,5 @@
 ---
-- name: keepalived | Deploy keepalived configuration
+- name: "keepalived | Deploy keepalived configuration"
   ansible.builtin.template:
     src: "keepalived.j2"
     dest: "{{ hostvars[inventory_hostname]['keepalived_destination'] +
@@ -10,7 +10,7 @@
     validate: "keepalived -t -f %s"
   notify:
     - "Restart keepalived"
-- name: keepalived | Enable keepalived service
+- name: "keepalived | Enable keepalived service"
   ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
     enabled: "yes"

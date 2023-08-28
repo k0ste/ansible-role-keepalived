@@ -58,7 +58,7 @@
 {{ '  persistence_granularity ' + kv.persistence_granularity }}
 {% endif %}
 {% if kv.protocol is defined and kv.protocol in ['TCP', 'UDP', 'SCTP'] %}
-{{ '  protocol  ' + kv.protocol }}
+{{ '  protocol ' + kv.protocol }}
 {% endif %}
 {% if kv.ha_suspend is defined and kv.ha_suspend == 'true' %}
 {{ '  ha_suspend' }}
@@ -91,7 +91,7 @@
 {% for kvs in kv.sorry_server %}
 {% if kvs.address is defined and kvs.address != '' and kvs.port is defined
   and kvs.port != '' %}
-{{ '  sorry_server ' ~ kvs.address ~ ' ' ~ kvs.port }}
+{{ '  sorry_server ' + kvs.address + ' ' ~ kvs.port }}
 {% endif %}
 {% endfor %}
 {% endif %}

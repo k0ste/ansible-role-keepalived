@@ -1,5 +1,5 @@
 ---
-- name: Restart keepalived
+- name: "Restart keepalived"
   ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
     state: "{{ vars['keepalived_restart_cmd'] }}"
