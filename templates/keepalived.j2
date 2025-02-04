@@ -1,6 +1,6 @@
-{{ '## ' + 'keepalived.conf' }}
+{{ '## keepalived.conf' }}
 {{ '# ' + ansible_managed }}
-{{ '# ' + 'Do not edit manually' }}
+{{ '# Do not edit manually' }}
 
 {% for k in vars['keepalived_settings'] %}
 {% if k.global is defined and k.global != '' %}

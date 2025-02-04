@@ -16,7 +16,7 @@
     keepalived_install_package: "[] | map(&install_package || 'false', @) | [0]"
 - name: "keepalived | Include deployment tasks"
   ansible.builtin.include_tasks:
-    file: "deploy_keepalived.yml"
+    file: "deploy.yml"
   when:
     - "hostvars[inventory_hostname]['keepalived'] is defined"
     - "hostvars[inventory_hostname]['keepalived'] != ''"
