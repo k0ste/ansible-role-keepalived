@@ -15,9 +15,11 @@
     name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
     enabled: "yes"
   when:
+    - "hostvars[inventory_hostname]['keepalived'] is defined"
+    - "hostvars[inventory_hostname]['keepalived'] != ''"
     - "hostvars[inventory_hostname]['keepalived'] |
-       json_query(vars['keepalived_enable']) is defined"
+       community.general.json_query(vars['keepalived_enable']) is defined"
     - "hostvars[inventory_hostname]['keepalived'] |
-       json_query(vars['keepalived_enable']) == 'true'"
+       community.general.json_query(vars['keepalived_enable']) == 'true'"
   vars:
     keepalived_enable: "[] | map(&enable || 'false', @) | [0]"

@@ -8,7 +8,7 @@
       json_query('[].settings[]') }}"
     keepalived_restart_method: "{{ hostvars[inventory_hostname]['keepalived'] |
       json_query('[].restart_method | [0]') }}"
-- name: "keepalived | Assert that keepalived package state in valid value"
+- name: "keepalived | Assert that package state in valid value"
   ansible.builtin.assert:
     that:
       - "vars['keepalived_package_state'] in ['present', 'latest']"
@@ -16,7 +16,18 @@
     quiet: "true"
   when:
     - "vars['keepalived_package_state'] is defined"
+    - "vars['keepalived_package_state'] != []"
     - "vars['keepalived_package_state'] != ''"
+    - "vars['keepalived_package_state'] != None"
+- name: "keepalived | Set package state to 'present' cause value is not defined"
+  ansible.builtin.set_fact:
+    keepalived_package_state: "present"
+  when:
+    - "vars['keepalived_package_state'] is defined"
+    - "(vars['keepalived_package_state'] == '' or
+      vars['keepalived_package_state'] == None)"
+
+
 - name: "keepalived | Assert that restart method variable have proper value"
   ansible.builtin.assert:
     that:
@@ -25,6 +36,9 @@
     quiet: "true"
   when:
     - "vars['keepalived_restart_method'] is defined"
+    - "vars['keepalived_restart_method'] != []"
+    - "vars['keepalived_restart_method'] != ''"
+    - "vars['keepalived_restart_method'] != None"
 - name: "keepalived | Set service restart method when restart method is defined"
   ansible.builtin.set_fact:
     keepalived_restart_cmd: "{{ vars['keepalived_restart_method'] + 'ed' }}"
@@ -36,7 +50,7 @@
     keepalived_restart_cmd: "reloaded"
   when:
     - "vars['keepalived_restart_method'] is not defined"
-- name: "keepalived | Make work dir"
+- name: "keepalived | Create working dir"
   ansible.builtin.file:
     path: "{{ hostvars[inventory_hostname]['keepalived_destination'] }}"
     state: "directory"
