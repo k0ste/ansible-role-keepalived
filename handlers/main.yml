@@ -1,14 +1,14 @@
 ---
-- name: "Restart keepalived"
+- name: "keepalived | Restart keepalived"
   ansible.builtin.systemd:
     name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
-    state: "{{ vars['keepalived_restart_cmd'] }}"
+    state: "restarted"
+  listen: "Restart keepalived"
   when:
-    - "hostvars[inventory_hostname]['keepalived'] is defined"
-    - "hostvars[inventory_hostname]['keepalived'] != ''"
-    - "hostvars[inventory_hostname]['keepalived'] |
-       json_query(vars['keepalived_restart']) is defined"
-    - "hostvars[inventory_hostname]['keepalived'] |
-       json_query(vars['keepalived_restart']) == 'true'"
+    - "lookup('ansible.builtin.vars', 'keepalived', default='')
+      not in ['', [], '[]', None]"
+    - "lookup('ansible.builtin.vars', 'keepalived') |
+       community.general.json_query(lookup('ansible.builtin.vars',
+      'keepalived_restart', default='')) == 'true'"
   vars:
     keepalived_restart: "[] | map(&restart || 'false', @) | [0]"

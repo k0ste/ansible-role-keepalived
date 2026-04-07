@@ -2,7 +2,7 @@
 - name: "keepalived | Deploy keepalived configuration"
   ansible.builtin.template:
     src: "keepalived.j2"
-    dest: "{{ hostvars[inventory_hostname]['keepalived_destination'] +
+    dest: "{{ lookup('ansible.builtin.vars', 'keepalived_destination') +
       '/keepalived.conf' }}"
     owner: "root"
     group: "root"
@@ -15,11 +15,10 @@
     name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
     enabled: "yes"
   when:
-    - "hostvars[inventory_hostname]['keepalived'] is defined"
-    - "hostvars[inventory_hostname]['keepalived'] != ''"
-    - "hostvars[inventory_hostname]['keepalived'] |
-       community.general.json_query(vars['keepalived_enable']) is defined"
-    - "hostvars[inventory_hostname]['keepalived'] |
-       community.general.json_query(vars['keepalived_enable']) == 'true'"
+    - "lookup('ansible.builtin.vars', 'keepalived', default='')
+      not in ['', [], '[]', None]"
+    - "lookup('ansible.builtin.vars', 'keepalived') |
+       community.general.json_query(lookup('ansible.builtin.vars',
+      'keepalived_enable', default='')) == 'true'"
   vars:
     keepalived_enable: "[] | map(&enable || 'false', @) | [0]"

@@ -1,58 +1,77 @@
 ---
-- name: "keepalived | Add the OS specific variables"
-  ansible.builtin.include_vars:
-    file: "{{ hostvars[inventory_hostname]['ansible_os_family'] + '.yml' }}"
-- name: "keepalived | Set facts about keepalived role"
-  ansible.builtin.set_fact:
-    keepalived_settings: "{{ hostvars[inventory_hostname]['keepalived'] |
-      json_query('[].settings[]') }}"
-    keepalived_restart_method: "{{ hostvars[inventory_hostname]['keepalived'] |
-      json_query('[].restart_method | [0]') }}"
-- name: "keepalived | Assert that package state in valid value"
+- name: "keepalived | Assert that ansible facts gathered successfully"
   ansible.builtin.assert:
     that:
-      - "vars['keepalived_package_state'] in ['present', 'latest']"
-    fail_msg: "'package_state' must be in 'present' or 'latest'"
+      - "hostvars[inventory_hostname]['ansible_facts']['service_mgr'] is
+        defined"
+    fail_msg: "'ansible_facts' not found. Please enable facts gathering"
+    quiet: "true"
+- name: "keepalived | Assert that system manager is systemd"
+  ansible.builtin.assert:
+    that:
+      - "hostvars[inventory_hostname]['ansible_facts']['service_mgr'] ==
+        'systemd'"
+    fail_msg: "System manager is not systemd"
+    quiet: "true"
+- name: "keepalived | Add the OS specific variables"
+  ansible.builtin.include_vars:
+    file: "{{ hostvars[inventory_hostname]['ansible_facts']['os_family'] +
+      '.yml' }}"
+- name: "keepalived | Set facts about keepalived role"
+  ansible.builtin.set_fact:
+    keepalived_settings: "{{ lookup('ansible.builtin.vars', 'keepalived') |
+      community.general.json_query('[].settings[]') }}"
+    keepalived_restart_method: "{{ lookup('ansible.builtin.vars',
+      'keepalived') | community.general.json_query('[].restart_method |
+      [0]') }}"
+  when:
+    - "lookup('ansible.builtin.vars', 'keepalived', default='')
+      not in ['', [], '[]', None]"
+- name: "keepalived | Assert that keepalived package state in valid value"
+  ansible.builtin.assert:
+    that:
+      - "lookup('ansible.builtin.vars', 'keepalived_package_state') in
+        ['present', 'latest']"
+    fail_msg: "{{ 'package_state must be in `present` or `latest`,
+      current is: ' + lookup('ansible.builtin.vars',
+      'keepalived_package_state') }}"
     quiet: "true"
   when:
-    - "vars['keepalived_package_state'] is defined"
-    - "vars['keepalived_package_state'] != []"
-    - "vars['keepalived_package_state'] != ''"
-    - "vars['keepalived_package_state'] != None"
+    - "lookup('ansible.builtin.vars', 'keepalived_package_state',
+      default='') not in ['', [], '[]', None, 'present', 'latest']"
 - name: "keepalived | Set package state to 'present' cause value is not defined"
   ansible.builtin.set_fact:
     keepalived_package_state: "present"
   when:
-    - "vars['keepalived_package_state'] is defined"
-    - "(vars['keepalived_package_state'] == '' or
-      vars['keepalived_package_state'] == None)"
-
-
+    - "lookup('ansible.builtin.vars', 'keepalived_package_state',
+      default='') in ['', [], '[]', None]"
 - name: "keepalived | Assert that restart method variable have proper value"
   ansible.builtin.assert:
     that:
-      - "vars['keepalived_restart_method'] in ['reload', 'restart']"
+      - "lookup('ansible.builtin.vars', 'keepalived_restart_method',
+        default='') in ['reload', 'restart']"
     fail_msg: "keepalived restart method must be in 'reload' or 'restart'"
     quiet: "true"
   when:
-    - "vars['keepalived_restart_method'] is defined"
-    - "vars['keepalived_restart_method'] != []"
-    - "vars['keepalived_restart_method'] != ''"
-    - "vars['keepalived_restart_method'] != None"
+    - "lookup('ansible.builtin.vars', 'keepalived_restart_method',
+      default='') not in ['', [], '[]', None, 'reload', 'restart']"
 - name: "keepalived | Set service restart method when restart method is defined"
   ansible.builtin.set_fact:
-    keepalived_restart_cmd: "{{ vars['keepalived_restart_method'] + 'ed' }}"
+    keepalived_restart_cmd: "{{ lookup('ansible.builtin.vars',
+      'keepalived_restart_method') + 'ed' }}"
   when:
-    - "vars['keepalived_restart_method'] is defined"
+    - "lookup('ansible.builtin.vars', 'keepalived_restart_method',
+      default='') in ['reload', 'restart']"
 - name: "keepalived | Set service restart method to SIGHUP when restart method
     is not defined"
   ansible.builtin.set_fact:
     keepalived_restart_cmd: "reloaded"
   when:
-    - "vars['keepalived_restart_method'] is not defined"
+    - "lookup('ansible.builtin.vars', 'keepalived_restart_method',
+      default='') in ['', [], '[]', None]"
 - name: "keepalived | Create working dir"
   ansible.builtin.file:
-    path: "{{ hostvars[inventory_hostname]['keepalived_destination'] }}"
+    path: "{{ lookup('ansible.builtin.vars', 'keepalived_destination') }}"
     state: "directory"
     owner: "root"
     group: "root"

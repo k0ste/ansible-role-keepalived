@@ -1,10 +1,10 @@
 # keepalived
 
-Role for deploy Keepalived - framework for load balancing and high availability.
+Role for deploy Keepalived - framework for load balancing and high availability
 
 ## Requirements for usage
 
-* Ansible 2.10+;
+* Ansible 3.0.0+;
 
 ## Example configuration
 

@@ -1,40 +1,42 @@
-{% for kv in k.vrrp_script %}
-{% if kv.name is defined and kv.name != '' %}
-{{ 'vrrp_script' ~ ' ' ~ kv.name ~ ' {' }}
-{% if kv.script is defined and kv.script != '' %}
-{{ '  ' + 'script' + '\"' + kv.script + '\"' }}
+{% for kv in k['vrrp_script'] %}
+{% if kv['name'] is defined and kv['name'] not in ['', [], '[]', None] %}
+{{ 'vrrp_script ' ~ kv['name'] ~ ' {' }}
+{% if kv['script'] is defined and kv['script'] not in ['', [], '[]', None] %}
+{{ '  script \"' + kv['script'] + '\"' }}
 {% endif %}
-{% if kv.interval is defined and kv.interval != '' %}
-{{ '  ' ~ 'interval' ~ ' ' ~ kv.interval  }}
+{% if kv['interval'] is defined and kv['interval']
+  not in ['', [], '[]', None] %}
+{{ '  interval ' ~ kv['interval']  }}
 {% endif %}
-{% if kv.timeout is defined and kv.timeout != '' %}
-{{ '  ' ~ 'timeout' ~ ' ' ~ kv.timeout  }}
+{% if kv['timeout'] is defined and kv['timeout'] not in ['', [], '[]', None] %}
+{{ '  timeout ' ~ kv['timeout']  }}
 {% endif %}
-{% if kv.weight is defined and kv.weight != '' %}
-{{ '  ' ~ 'weight' ~ ' ' ~ kv.weight  }}
+{% if kv['weight'] is defined and kv['weight'] not in ['', [], '[]', None] %}
+{{ '  weight ' ~ kv['weight']  }}
 {% endif %}
-{% if kv.rise is defined and kv.rise != '' %}
-{{ '  ' ~ 'rise' ~ ' ' ~ kv.rise  }}
+{% if kv['rise'] is defined and kv['rise'] not in ['', [], '[]', None] %}
+{{ '  rise ' ~ kv['rise']  }}
 {% endif %}
-{% if kv.fall is defined and kv.fall != '' %}
-{{ '  ' ~ 'fall' ~ ' ' ~ kv.fall  }}
+{% if kv['fall'] is defined and kv['fall'] not in ['', [], '[]', None] %}
+{{ '  fall ' ~ kv['fall']  }}
 {% endif %}
-{% if kv.init_fail is defined and kv.init_fail == 'true' %}
-{{ '  ' ~ 'init_fail' ~ kv.init_fail  }}
+{% if kv['init_fail'] is defined and kv['init_fail'] == 'true' %}
+{{ '  init_fail' }}
 {% endif %}
-{% if kv.user is defined and kv.user != '' %}
-{% for kvs in kv.user %}
-{% if kvs.username is defined and kvs.username != '' %}
-{% if kvs.group is defined and kvs.group != '' %}
-{{ '  ' ~ 'user' ~ ' ' ~ kvs.username ~ ' ' ~ kvs.group }}
+{% if kv['user'] is defined and kv['user'] not in ['', [], '[]', None] %}
+{% for kvs in kv['user'] %}
+{% if kvs['username'] is defined and kvs['username']
+  not in ['', [], '[]', None] %}
+{% if kvs['group'] is defined and kvs['group'] not in ['', [], '[]', None] %}
+{{ '  user ' ~ kvs['username'] ~ ' ' ~ kvs['group'] }}
 {% else %}
-{{ '  ' ~ 'user' ~ ' ' ~ kvs.username }}
+{{ '  user ' ~ kvs['username'] }}
 {% endif %}
 {% endif %}
 {% endfor %}
 {% endif %}
 {% endif %}
-{% if loop.last %}
+{% if loop['last'] %}
 {{ '}' }}
 {{ '' }}
 {% else %}

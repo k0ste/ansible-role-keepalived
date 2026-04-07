@@ -1,5 +1,5 @@
-{{ 'static_ipaddress' + ' {' }}
-{% for ks in k.static_ipaddress %}
+{{ 'static_ipaddress {' }}
+{% for ks in k['static_ipaddress'] %}
 {{ '  ' + ks }}
 {% endfor %}
 {{ '}' }}

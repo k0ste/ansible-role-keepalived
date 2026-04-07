@@ -1,16 +1,18 @@
-{{ 'SSL' + ' {' }}
-{% for ks in k.ssl %}
-{% if ks.password is defined and ks.password != '' %}
-{{ '  ' ~ 'password' ~ ' ' ~ ks.password }}
+{{ 'SSL {' }}
+{% for ks in k['ssl'] %}
+{% if ks['password'] is defined and ks['password']
+  not in ['', [], '[]', None] %}
+{{ '  password ' ~ ks['password'] }}
 {% endif %}
-{% if ks.ca is defined and ks.ca != '' %}
-{{ '  ' + 'ca' + ' ' + ks.ca }}
+{% if ks['ca'] is defined and ks['ca'] not in ['', [], '[]', None] %}
+{{ '  ca ' + ks['ca'] }}
 {% endif %}
-{% if ks.certificate is defined and ks.certificate != '' %}
-{{ '  ' + 'certificate' + ' ' + ks.certificate }}
+{% if ks['certificate'] is defined and ks['certificate']
+  not in ['', [], '[]', None] %}
+{{ '  certificate ' + ks['certificate'] }}
 {% endif %}
-{% if ks.key is defined and ks.key != '' %}
-{{ '  ' + 'key' + ' ' + ks.key }}
+{% if ks['key'] is defined and ks['key'] not in ['', [], '[]', None] %}
+{{ '  key ' + ks['key'] }}
 {% endif %}
 {% endfor %}
 {{ '}'}}

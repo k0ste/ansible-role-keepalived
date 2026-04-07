@@ -3,37 +3,46 @@
 {{ '# Do not edit manually' }}
 
 {% for k in vars['keepalived_settings'] %}
-{% if k.global is defined and k.global != '' %}
+{% if k['global'] is defined and k['global'] not in ['', [], '[]', None] %}
 {% include 'global_defs.j2' %}
 {% endif %}
-{% if k.static_ipaddress is defined and k.static_ipaddress != '' %}
+{% if k['static_ipaddress'] is defined and k['static_ipaddress']
+  not in ['', [], '[]', None] %}
 {% include 'static_ipaddress.j2' %}
 {% endif %}
-{% if k.static_routes is defined and k.static_routes != '' %}
+{% if k['static_routes'] is defined and k['static_routes']
+  not in ['', [], '[]', None] %}
 {% include 'static_routes.j2' %}
 {% endif %}
-{% if k.static_rules is defined and k.static_rules != '' %}
+{% if k['static_rules'] is defined and k['static_rules']
+  not in ['', [], '[]', None] %}
 {% include 'static_rules.j2' %}
 {% endif %}
-{% if k.vrrp_script is defined and k.vrrp_script != '' %}
+{% if k['vrrp_script'] is defined and k['vrrp_script']
+  not in ['', [], '[]', None] %}
 {% include 'vrrp_script.j2' %}
 {% endif %}
-{% if k.vrrp_sync_group is defined and k.vrrp_sync_group != '' %}
+{% if k['vrrp_sync_group'] is defined and k['vrrp_sync_group']
+  not in ['', [], '[]', None] %}
 {% include 'vrrp_sync_group.j2' %}
 {% endif %}
-{% if k.garp_group is defined and k.garp_group != '' %}
+{% if k['garp_group'] is defined and k['garp_group']
+  not in ['', [], '[]', None] %}
 {% include 'garp_group.j2' %}
 {% endif %}
-{% if k.vrrp_instance is defined and k.vrrp_instance != '' %}
+{% if k['vrrp_instance'] is defined and k['vrrp_instance']
+  not in ['', [], '[]', None] %}
 {% include 'vrrp_instance.j2' %}
 {% endif %}
-{% if k.ssl is defined and k.ssl != '' %}
+{% if k['ssl'] is defined and k['ssl'] not in ['', [], '[]', None] %}
 {% include 'ssl.j2' %}
 {% endif %}
-{% if k.virtual_server_group is defined and k.virtual_server_group != '' %}
+{% if k['virtual_server_group'] is defined and k['virtual_server_group']
+  not in ['', [], '[]', None] %}
 {% include 'virtual_server_group.j2' %}
 {% endif %}
-{% if k.virtual_server is defined and k.virtual_server != '' %}
+{% if k['virtual_server'] is defined and k['virtual_server']
+  not in ['', [], '[]', None] %}
 {% include 'virtual_server.j2' %}
 {% endif %}
 {% endfor %}

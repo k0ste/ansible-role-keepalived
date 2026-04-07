@@ -13,6 +13,9 @@ galaxy_info:
     - name: "EL"
       versions:
         - 'all'
+    - name: "ArchLinux"
+      versions:
+        - 'all'
   galaxy_tags:
     - 'networking'
 dependencies: []

@@ -1,29 +1,35 @@
-{% if kvrc.retry is defined and kvrc.retry != '' %}
-{{ '      ' ~ 'retry' ~ ' ' ~ kvrc.retry }}
+{% if kvrc['retry'] is defined and kvrc['retry'] not in ['', [], '[]', None] %}
+{{ '      retry ' ~ kvrc['retry'] }}
 {% endif %}
-{% if kvrc.delay_before_retry is defined and kvrc.delay_before_retry != '' %}
-{{ '      ' ~ 'delay_before_retry' ~ ' ' ~ kvrc.delay_before_retry }}
+{% if kvrc['delay_before_retry'] is defined and kvrc['delay_before_retry']
+  not in ['', [], '[]', None] %}
+{{ '      delay_before_retry ' ~ kvrc['delay_before_retry'] }}
 {% endif %}
-{% if kvrc.warmup is defined and kvrc.warmup != '' %}
-{{ '      ' ~ 'warmup' ~ ' ' ~ kvrc.warmup }}
+{% if kvrc['warmup'] is defined and kvrc['warmup']
+  not in ['', [], '[]', None] %}
+{{ '      warmup ' ~ kvrc['warmup'] }}
 {% endif %}
-{% if kvrc.connect_ip is defined and kvrc.connect_ip |
+{% if kvrc['connect_ip'] is defined and (kvrc['connect_ip'] |
+  ansible.utils.ipaddr('host')) %}
+{{ '      connect_ip ' + kvrc['connect_ip'] }}
+{% endif %}
+{% if kvrc['connect_port'] is defined and kvrc['connect_port']
+  not in ['', [], '[]', None] %}
+{{ '      connect_port ' ~ kvrc['connect_port'] }}
+{% endif %}
+{% if kvrc['bindto'] is defined and kvrc['bindto'] |
   ansible.utils.ipaddr('host') %}
-{{ '      ' + 'connect_ip' + ' ' + kvrc.connect_ip }}
+{{ '      bindto ' + kvrc['bindto'] }}
 {% endif %}
-{% if kvrc.connect_port is defined and kvrc.connect_port != '' %}
-{{ '      ' ~ 'connect_port' ~ ' ' ~ kvrc.connect_port }}
+{% if kvrc['bind_port'] is defined and kvrc['bind_port']
+  not in ['', [], '[]', None] %}
+{{ '      bind_port ' ~ kvrc['bind_port'] }}
 {% endif %}
-{% if kvrc.bindto is defined and kvrc.bindto |
-  ansible.utils.ipaddr('host') %}
-{{ '      ' + 'bindto' + ' ' + kvrc.bindto }}
+{% if kvrc['connect_timeout'] is defined and kvrc['connect_timeout']
+  not in ['', [], '[]', None] %}
+{{ '      connect_timeout ' ~ kvrc['connect_timeout'] }}
 {% endif %}
-{% if kvrc.bind_port is defined and kvrc.bind_port != '' %}
-{{ '      ' ~ 'bind_port' ~ ' ' ~ kvrc.bind_port }}
-{% endif %}
-{% if kvrc.connect_timeout is defined and kvrc.connect_timeout != '' %}
-{{ '      ' ~ 'connect_timeout' ~ ' ' ~ kvrc.connect_timeout }}
-{% endif %}
-{% if kvrc.fwmark is defined and kvrc.fwmark != '' %}
-{{ '      ' ~ 'fwmark' ~ ' ' ~ kvrc.fwmark }}
+{% if kvrc['fwmark'] is defined and kvrc['fwmark']
+  not in ['', [], '[]', None] %}
+{{ '      fwmark ' ~ kvrc['fwmark'] }}
 {% endif %}
