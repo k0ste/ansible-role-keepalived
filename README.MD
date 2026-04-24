@@ -11,12 +11,15 @@ Role for deploy Keepalived - framework for load balancing and high availability
 ```yaml
 ---
 keepalived:
-# Enable keepalived after deploy.
+# Enable keepalived after deploy
 - enable: 'true'
-# Restart keepalived after deploy.
+# Restart keepalived after deploy
   restart: 'false'
-# Install keepalived.
+# Install keepalived package or not
   install_package: 'true'
+# 'present' (do nothing if package is already installed) or 'latest' (always
+# upgrade to last version)
+  package_state: 'latest'
 # What to do when 'keepalived_restart' set to 'true' - 'reload' or 'restart'.
   restart_method: 'reload'
   settings:
@@ -381,15 +384,17 @@ keepalived:
 # vrrp packets. Since it's multicast, vrrpd will get the reply packet no matter
 # what src_addr is used.
       mcast_src_ip: 'IPADDR'
-      unicast_src_ip: 'IPADDR'
 # VRRP version to run on interface. Default is global parameter 'vrrp_version'.
       version: '2' # '2' or '3'
 # Do not send VRRP adverts over a VRRP multicast group. Instead it sends
 # adverts to the following list of ip addresses using unicast. It can be cool
 # to use the VRRP FSM and features in a networking environment where multicast
 # is not supported! # IP addresses specified can be IPv4 as well as IPv6.
-      unicast_peer:
-      - 'IPADDR'
+      unicast:
+        - src_ip: '192.168.1.1'
+          peer:
+            - '192.168.1.2'
+            - '192.168.1.3'
 # Interface specific settings, same as global parameters. Default to global
 # parameters.
       garp_master_delay: '10'

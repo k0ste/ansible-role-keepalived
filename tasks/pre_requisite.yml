@@ -21,6 +21,8 @@
   ansible.builtin.set_fact:
     keepalived_settings: "{{ lookup('ansible.builtin.vars', 'keepalived') |
       community.general.json_query('[].settings[]') }}"
+    keepalived_package_state: "{{ lookup('ansible.builtin.vars', 'keepalived') |
+      community.general.json_query('[].package_state | [0]') }}"
     keepalived_restart_method: "{{ lookup('ansible.builtin.vars',
       'keepalived') | community.general.json_query('[].restart_method |
       [0]') }}"

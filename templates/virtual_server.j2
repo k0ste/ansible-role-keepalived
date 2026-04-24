@@ -7,12 +7,12 @@
 {{ '  delay_loop ' ~ kv['delay_loop'] }}
 {% endif %}
 {% if kv['lvs_sched'] is defined and kv['lvs_sched'] in ['rr', 'wrr', 'lc',
-  'wlc', 'lblc', 'sh', 'mh', 'dh', 'fo', 'ovf', 'lblcr', 'sed', 'nq'] %}
+  'wlc', 'lblc', 'sh', 'mh', 'dh', 'fo', 'ovf', 'lblcr', 'sed', 'nq', 'twos'] %}
 {{ '  lvs_sched ' + kv['lvs_sched'] }}
 {% endif %}
 {# lb_algo - deprecated synonym for lvs_sched #}
 {% if kv['lb_algo'] is defined and kv['lb_algo'] in ['rr', 'wrr', 'lc', 'wlc',
-  'lblc', 'sh', 'mh', 'dh', 'fo', 'ovf', 'lblcr', 'sed', 'nq'] %}
+  'lblc', 'sh', 'mh', 'dh', 'fo', 'ovf', 'lblcr', 'sed', 'nq', 'twos'] %}
 {{ '  lb_algo ' + kv['lb_algo'] }}
 {% endif %}
 {% if kv['hashed'] is defined and kv['hashed'] == 'true' %}

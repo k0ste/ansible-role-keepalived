@@ -2,7 +2,7 @@
 {{ '# ' + ansible_managed }}
 {{ '# Do not edit manually' }}
 
-{% for k in vars['keepalived_settings'] %}
+{% for k in lookup('ansible.builtin.vars', 'keepalived_settings') %}
 {% if k['global'] is defined and k['global'] not in ['', [], '[]', None] %}
 {% include 'global_defs.j2' %}
 {% endif %}

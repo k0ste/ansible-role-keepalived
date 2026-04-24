@@ -1,7 +1,7 @@
 ---
 - name: "keepalived | Restart keepalived"
   ansible.builtin.systemd:
-    name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
+    name: "{{ lookup('ansible.builtin.vars', 'keepalived_service') }}"
     state: "restarted"
   listen: "Restart keepalived"
   when:

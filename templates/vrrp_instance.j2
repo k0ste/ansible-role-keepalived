@@ -56,22 +56,24 @@
   not in ['', [], '[]', None] %}
 {{ '  mcast_src_ip ' + kv['mcast_src_ip'] }}
 {% endif %}
-{% if kv['unicast_src_ip'] is defined and kv['unicast_src_ip']
-  not in ['', [], '[]', None] %}
-{{ '  unicast_src_ip ' + kv['unicast_src_ip'] }}
-{% endif %}
 {% if kv['version'] is defined and kv['version'] in ['2', '3'] %}
 {{ '  version ' ~ kv['version'] }}
 {% endif %}
-{% if kv['unicast_peer'] is defined and kv['unicast_peer']
-  not in ['', [], '[]', None] %}
+{% if kv['unicast'] is defined and kv['unicast'] not in ['', [], '[]', None] %}
+{% for kvu in kv['unicast'] %}
+{% if kvu['src_ip'] is defined and kvu['src_ip'] not in ['', [], '[]', None] %}
+{{ '  unicast_src_ip ' + kvu['src_ip'] }}
+{% endif %}
+{% if kvu['peer'] is defined and kvu['peer'] not in ['', [], '[]', None] %}
 {{ '  unicast_peer {' }}
-{% for kvu in kv['unicast_peer'] %}
-{% if kvu | ansible.utils.ipaddr('host') %}
-{{ '    ' + kvu }}
+{% for kvup in kvu['peer'] %}
+{% if kvup is ansible.utils.ip() %}
+{{ '    ' + (kvup | ansible.utils.ipaddr('address')) }}
 {% endif %}
 {% endfor %}
 {{ '  }' }}
+{% endif %}
+{% endfor %}
 {% endif %}
 {% if kv['garp_master_delay'] is defined and kv['garp_master_delay']
   not in ['', [], '[]', None] %}

@@ -12,7 +12,7 @@
     - "Restart keepalived"
 - name: "keepalived | Enable keepalived service"
   ansible.builtin.systemd:
-    name: "{{ hostvars[inventory_hostname]['keepalived_service'] }}"
+    name: "{{ lookup('ansible.builtin.vars', 'keepalived_service') }}"
     enabled: "yes"
   when:
     - "lookup('ansible.builtin.vars', 'keepalived', default='')
