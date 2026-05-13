@@ -140,12 +140,40 @@ keepalived:
 # process vrrp packets.
 # Set the vrrp child process priority. Negative values increase priority.
       vrrp_priority: '' # from '-20' to '19'
-# Set the checker child process priority.
+# Set the checker child process priority
       checker_priority: '' # from '-20' to '19'
-# Set the vrrp child process non swappable.
+# Set the vrrp child process non swappable
       vrrp_no_swap: 'false'
-# Set the checker child process non swappable.
+# Set the checker child process non swappable
       checker_no_swap: 'false'
+# Set the BFD child process non swappable
+      bfd_no_swap: 'false'
+# The following options can be used to force vrrp, checker and bfd processes to
+# run on a restricted CPU set. You can either bind processes to a single CPU or
+# define a set of cpu. In that last case Linux kernel will be restricted to
+# that cpu set during scheduling. Forcing process binding to single CPU can
+# increase performances on heavy loaded box. INTEGER following configuration
+# keyword are representing cpu_id as shown in /proc/cpuinfo on line 'processor:'
+# Set CPU Affinity for the vrrp child process
+      vrrp_cpu_affinity: ''
+# Set CPU Affinity for the checker child process
+      checker_cpu_affinity: ''
+# Set CPU Affinity for the bfd child process
+      bfd_cpu_affinity: ''
+# Set the vrrp child process to use real-time scheduling at the specified
+# priority (from '1' to '99')
+      vrrp_rt_priority: '0'
+# Set the checker child process to use real-time scheduling at the specified
+# priority (from '1' to '99')
+      checker_rt_priority: '0'
+# Set the BFD child process to use real-time scheduling at the specified
+# priority (from '1' to '99')
+      bfd_rt_priority: '0'
+# Set the limit on CPU time between blocking system calls, in microseconds
+# (default is '10000')
+      vrrp_rlimit_rttime: '10000'
+      checker_rlimit_rttime: '10000'
+      bfd_rlimit_rttime: '10000'
 # Specify socket to use for connecting to SNMP master agent default is
 # 'unix:/var/agentx/master'. Unless using a network namespace, when the default
 # is 'udp:localhost:705'.
@@ -299,8 +327,15 @@ keepalived:
         user: 'username'
         group: 'groupname'
 # Send email notification during state transition, using addresses in
-# 'global_defs'.
+# 'global_defs'
       smtp_alert: 'false'
+# BFD instances we monitor, value is added to effective priority
+      track_bfd:
+        - name: 'bfd1'
+          weight:
+            - value: '-253'
+              reverse: 'false'
+              noreverse: 'false'
 # All VRRP share the same tracking config.
       global_tracking: 'false'
 # VRRP gratuitous ARP and unsolicited neighbour advert delay groups. Specifies
@@ -386,17 +421,27 @@ keepalived:
       mcast_src_ip: 'IPADDR'
 # VRRP version to run on interface. Default is global parameter 'vrrp_version'.
       version: '2' # '2' or '3'
+# BFD instances we monitor, value is added to effective priority, unless
+# 'reverse' is specified, when the value is subtracted. Positive weights are
+# add/subtracted when the bfd instance is up, negative weights are
+# subtracted/added when the bfd instance is down
+      track_bfd:
+        - name: 'bfd1'
+          weight:
+            - value: '-253'
+              reverse: 'false'
+              noreverse: 'false'
 # Do not send VRRP adverts over a VRRP multicast group. Instead it sends
 # adverts to the following list of ip addresses using unicast. It can be cool
 # to use the VRRP FSM and features in a networking environment where multicast
-# is not supported! # IP addresses specified can be IPv4 as well as IPv6.
+# is not supported! # IP addresses specified can be IPv4 as well as IPv6
       unicast:
         - src_ip: '192.168.1.1'
           peer:
             - '192.168.1.2'
             - '192.168.1.3'
 # Interface specific settings, same as global parameters. Default to global
-# parameters.
+# parameters
       garp_master_delay: '10'
       garp_master_repeat: '1'
       garp_lower_prio_delay: '10'
@@ -617,8 +662,47 @@ keepalived:
       - '192.168.200.3-10 80'
       - 'fwmark 1'
       - 'fwmark 2'
-# Virtual servers.
-  - virtual_server:
+# BFD - this is an implementation of RFC5880 (Bidirectional Forwarding
+# Detection)
+  bfd:
+    - name: 'bfd1'
+# BFD Neighbor IP
+      neighbor_ip: '192.168.200.2'
+# Source IP to use (optional, except in order to ensure that the local port is
+# valid, it is required)
+      source_ip: '192.168.200.1'
+# Required min RX interval (default is '10' ms)
+      min_rx: '300'
+# Desired min TX interval, (default is '10' ms)
+      min_tx: '300'
+# Desired idle TX interval (default is '1000' ms)
+      idle_tx: '1000'
+# Number of missed packets after which the session is declared down (default is
+# '5')
+      multiplier: '3'
+# Operate in passive mode (default is 'false' [active])
+      passive: 'false'
+# Outgoing IPv4 TTL to use (default is '255')
+      ttl: '254'
+# Outgoing IPv6 hoplimit to use (default is '64')
+      hoplimit: '64'
+# Maximum reduction of TTL/hoplimit in received packet (default is '0')
+# Set to '255' to disables hop count checking
+      max_hops: '0'
+# RFC 5883 specifies port 4784 must be used for multihop bfd, rather than port
+# 3784. Specifying multihop enables that option, but if multiple hops are in
+# use, then 'max_hops' will also need to be configured
+      multihop: 'true'
+# Default tracking weight
+# Normally, positive weights are added to the vrrp instance priority when
+# the bfd instance is up, negative weights reduce the priority when it is down.
+# However, if 'reverse' is specified, a positive weight decreases the priority
+# the script is up, and a negative weight increases the priority when the script
+# is 'weight 0 reverse' will cause the vrrp instance to be down when the bfd
+# instance is up, and vice versa
+      weight: '1' # In range '-253:253'
+# Virtual servers
+  virtual_server:
     - instance: 'VSG_1' # 'virtual_server_group' or data from 'virtual_server_group'
 # Delay timer for service polling.
       delay_loop: '6'
@@ -744,7 +828,7 @@ keepalived:
 # Minimum number of connections to server.
         lthreshold: '1'
 # Pick one healthchecker from 'HTTP_GET', 'SSL_GET', 'TCP_CHECK', 'SMTP_CHECK',
-# 'DNS_CHECK', 'MISC_CHECK'.
+# 'DNS_CHECK', 'MISC_CHECK', 'BFD_CHECK'
         checks:
 # HTTP and SSL healthcheckers.
         - check_method: 'HTTP_GET' # or 'SSL_GET'
@@ -865,7 +949,7 @@ keepalived:
           connect_timeout: '5'
 # Optional fwmark to mark all outgoing checker packets with.
           fwmark: ''
-# MISC healthchecker, run a program.
+# MISC healthchecker, run a program
         - check_method: 'MISC_CHECK'
 # External script or program.
           misc_path: '/path/to_script.sh'
@@ -887,4 +971,7 @@ keepalived:
           misc_user:
           - username: 'automation'
             group: 'robots'
+# BFD instance name to check
+        - check_method: 'BFD_CHECK'
+          bfd: 'bfd2'
 ```

@@ -96,6 +96,45 @@
 {% if kg['checker_no_swap'] is defined and kg['checker_no_swap'] == 'true' %}
 {{ '  checker_no_swap' }}
 {% endif %}
+{% if kg['bfd_no_swap'] is defined and kg['bfd_no_swap'] == 'true' %}
+{{ '  bfd_no_swap' }}
+{% endif %}
+{% if kg['vrrp_cpu_affinity'] is defined and kg['vrrp_cpu_affinity']
+  not in ['', [], '[]', None] %}
+{{ '  vrrp_cpu_affinity ' + kg['vrrp_cpu_affinity'] }}
+{% endif %}
+{% if kg['checker_cpu_affinity'] is defined and kg['checker_cpu_affinity']
+  not in ['', [], '[]', None] %}
+{{ '  checker_cpu_affinity ' + kg['checker_cpu_affinity'] }}
+{% endif %}
+{% if kg['bfd_cpu_affinity'] is defined and kg['bfd_cpu_affinity']
+  not in ['', [], '[]', None] %}
+{{ '  bfd_cpu_affinity ' + kg['bfd_cpu_affinity'] }}
+{% endif %}
+{% if kg['vrrp_rt_priority'] is defined and kg['vrrp_rt_priority']
+  not in ['', [], '[]', None] %}
+{{ '  vrrp_rt_priority ' + kg['vrrp_rt_priority'] }}
+{% endif %}
+{% if kg['checker_rt_priority'] is defined and kg['checker_rt_priority']
+  not in ['', [], '[]', None] %}
+{{ '  checker_rt_priority ' + kg['checker_rt_priority'] }}
+{% endif %}
+{% if kg['bfd_rt_priority'] is defined and kg['bfd_rt_priority']
+  not in ['', [], '[]', None] %}
+{{ '  bfd_rt_priority ' + kg['bfd_rt_priority'] }}
+{% endif %}
+{% if kg['vrrp_rlimit_rttime'] is defined and kg['vrrp_rlimit_rttime']
+  not in ['', [], '[]', None] %}
+{{ '  vrrp_rlimit_rttime ' + kg['vrrp_rlimit_rttime'] }}
+{% endif %}
+{% if kg['checker_rlimit_rttime'] is defined and kg['checker_rlimit_rttime']
+  not in ['', [], '[]', None] %}
+{{ '  checker_rlimit_rttime ' + kg['checker_rlimit_rttime'] }}
+{% endif %}
+{% if kg['bfd_rlimit_rttime'] is defined and kg['bfd_rlimit_rttime']
+  not in ['', [], '[]', None] %}
+{{ '  bfd_rlimit_rttime ' + kg['bfd_rlimit_rttime'] }}
+{% endif %}
 {% if kg['snmp_socket'] is defined and kg['snmp_socket']
   not in ['', [], '[]', None] %}
 {{ '  snmp_socket ' + kg['snmp_socket'] }}

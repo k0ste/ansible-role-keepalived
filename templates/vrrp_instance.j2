@@ -38,6 +38,33 @@
 {% endfor %}
 {{ '  }' }}
 {% endif %}
+{% if kv['track_bfd'] is defined and kv['track_bfd']
+  not in ['', [], '[]', None] %}
+{{ '  track_bfd {' }}
+{% for kvb in kv['track_bfd'] %}
+{% if kvb['name'] is defined and kvb['name'] not in ['', [], '[]', None] %}
+{% if kvb['weight'] is defined and kvb['weight']
+  not in ['', [], '[]', None] %}
+{% if kvb['weight'] is string %}
+{{ '    ' ~ kvb['name'] ~ ' weight ' ~ kvb['weight'] }}
+{% else %}
+{% for kvbw in kvb['weight'] %}
+{{ '    ' ~ kvb['name'] ~ ' weight ' ~ kvbw['value'] }}
+{%- if kvbw['reverse'] is defined and kvbw['reverse'] == 'true' -%}
+{{ ' reverse' }}
+{%- elif kvbw['noreverse'] is defined and kvbw['noreverse'] == 'true' -%}
+{{ ' noreverse' }}
+{% endif %}
+{{ '' }}
+{% endfor %}
+{% endif %}
+{% else %}
+{{ '    ' ~ kvb['name'] }}
+{% endif %}
+{% endif %}
+{% endfor %}
+{{ '  }' }}
+{% endif %}
 {% if kv['track_script'] is defined and kv['track_script']
   not in ['', [], '[]', None] %}
 {{ '  track_script {' }}

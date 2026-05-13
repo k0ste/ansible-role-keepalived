@@ -1,0 +1,46 @@
+{% for kb in k['bfd'] %}
+{% if kb['name'] is defined and kb['name'] not in ['', [], '[]', None] %}
+{{ 'bfd_instance ' ~ kb['name'] ~ ' {' }}
+{% if kb['neighbor_ip'] is defined and
+  kb['neighbor_ip'] is ansible.utils.ip() %}
+{{ '  neighbor_ip ' + kb['neighbor_ip'] }}
+{% endif %}
+{% if kb['source_ip'] is defined and kb['source_ip'] is ansible.utils.ip() %}
+{{ '  source_ip ' + kb['source_ip'] }}
+{% endif %}
+{% if kb['min_rx'] is defined and kb['min_rx'] not in ['', [], '[]', None] %}
+{{ '  min_rx ' ~ kb['min_rx'] }}
+{% endif %}
+{% if kb['min_tx'] is defined and kb['min_tx'] not in ['', [], '[]', None] %}
+{{ '  min_tx ' ~ kb['min_tx'] }}
+{% endif %}
+{% if kb['idle_tx'] is defined and kb['idle_tx'] not in ['', [], '[]', None] %}
+{{ '  idle_tx ' ~ kb['idle_tx'] }}
+{% endif %}
+{% if kb['multiplier'] is defined and kb['multiplier']
+  not in ['', [], '[]', None] %}
+{{ '  multiplier ' ~ kb['multiplier'] }}
+{% endif %}
+{% if kb['passive'] is defined and kb['passive'] == 'true' %}
+{{ '  passive' }}
+{% endif %}
+{% if kb['ttl'] is defined and kb['ttl'] not in ['', [], '[]', None] %}
+{{ '  ttl ' ~ kb['ttl'] }}
+{% endif %}
+{% if kb['hoplimit'] is defined and kb['hoplimit']
+  not in ['', [], '[]', None] %}
+{{ '  hoplimit ' ~ kb['hoplimit'] }}
+{% endif %}
+{% if kb['max_hops'] is defined and kb['max_hops']
+  not in ['', [], '[]', None] %}
+{{ '  max_hops ' ~ kb['max_hops'] }}
+{% endif %}
+{% if kb['multihop'] is defined and kb['multihop'] == 'true' %}
+{{ '  multihop' }}
+{% endif %}
+{% if kb['weight'] is defined and kb['weight'] not in ['', [], '[]', None] %}
+{{ '  weight ' ~ kb['weight'] }}
+{% endif %}
+{{ '}' }}
+{% endif %}
+{% endfor %}

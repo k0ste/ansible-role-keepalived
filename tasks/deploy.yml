@@ -7,7 +7,7 @@
     owner: "root"
     group: "root"
     mode: "0644"
-    validate: "keepalived -t -f %s"
+    validate: "keepalived --config-test --use-file %s"
   notify:
     - "Restart keepalived"
 - name: "keepalived | Enable keepalived service"

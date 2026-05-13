@@ -6,6 +6,9 @@
 {% if k['global'] is defined and k['global'] not in ['', [], '[]', None] %}
 {% include 'global_defs.j2' %}
 {% endif %}
+{% if k['bfd'] is defined and k['bfd'] not in ['', [], '[]', None] %}
+{% include 'bfd.j2' %}
+{% endif %}
 {% if k['static_ipaddress'] is defined and k['static_ipaddress']
   not in ['', [], '[]', None] %}
 {% include 'static_ipaddress.j2' %}

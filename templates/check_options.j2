@@ -33,3 +33,7 @@
   not in ['', [], '[]', None] %}
 {{ '      fwmark ' ~ kvrc['fwmark'] }}
 {% endif %}
+{% if kvrc['bfd'] is defined and kvrc['bfd']
+  not in ['', [], '[]', None] %}
+{{ '      name ' ~ kvrc['bfd'] }}
+{% endif %}
